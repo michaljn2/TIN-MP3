@@ -1,8 +1,17 @@
 import React from 'react';
+import Header from "./components/fragments/Header";
+import Navigation from "./components/fragments/Navigation";
+import MainContent from "./components/fragments/MainContent";
+import Footer from "./components/fragments/Footer";
 
 function App() {
   return (
-      <h1>Hello world!</h1>
+      <div>
+          <Header/>
+          <Navigation/>
+          <MainContent/>
+          <Footer/>
+      </div>
   );
 }
 
