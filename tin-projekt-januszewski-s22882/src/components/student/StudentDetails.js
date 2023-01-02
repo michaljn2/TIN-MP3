@@ -33,7 +33,7 @@ function EmployeeDetails() {
                             <td>{study.group.shortcut}</td>
                             <td>{study.group.course}</td>
                             <td>{study.grade ? study.grade : ""}</td>
-                            <td>{(study.itn == 1) ? 'tak' : 'nie'}</td>
+                            <td>{(study.itn === 1) ? 'tak' : 'nie'}</td>
                         </tr>
                 )}
                 </tbody>

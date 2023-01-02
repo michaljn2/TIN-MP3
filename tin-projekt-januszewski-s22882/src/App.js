@@ -10,6 +10,7 @@ import MainContent from "./components/fragments/MainContent";
 import Footer from "./components/fragments/Footer";
 import StudentList from "./components/student/StudentList";
 import StudentDetails from "./components/student/StudentDetails";
+import StudentForm from "./components/student/StudentForm";
 
 function App() {
   return (
@@ -18,9 +19,11 @@ function App() {
               <Header/>
               <Navigation/>
               <Routes>
-                  <Route path="/" element={<MainContent/>} />
-                  <Route path="/students" element={<StudentList/>} />
+                  <Route exact path="/" element={<MainContent/>} />
+                  <Route exact path="/students" element={<StudentList/>} />
                   <Route exact path="/students/details/:studId" element={<StudentDetails/>} />
+                  <Route exact path="/students/add" element={<StudentForm/>} />
+                  <Route exact path="/students/edit/:studId" element={<StudentForm/>} />
               </Routes>
               <Footer/>
           </div>
