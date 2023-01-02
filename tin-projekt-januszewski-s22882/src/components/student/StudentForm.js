@@ -7,23 +7,23 @@ class StudentForm extends React.Component {
             <main>
                 <h2>Nowy student</h2>
                 <form className="form">
-                    <label htmlFor="firstName">Imię:<abbr title="required" aria-label="required">*</abbr></label>
+                    <label htmlFor="firstName">Imię:<span className="symbol-required">*</span></label>
                     <input type="text" name="firstName" id="firstName" placeholder="2-60 znaków"/>
                     <span id="errorFirstName" className="errors-text"></span>
 
-                    <label htmlFor="lastName">Imię:<abbr title="required" aria-label="required">*</abbr></label>
+                    <label htmlFor="lastName">Imię:<span className="symbol-required">*</span></label>
                     <input type="text" name="lastName" id="lastName" placeholder="2-60 znaków" value=""/>
                     <span id="errorLastName" className="errors-text"></span>
 
-                    <label htmlFor="index">Indeks:<abbr title="required" aria-label="required">*</abbr></label>
+                    <label htmlFor="index">Indeks:<span className="symbol-required">*</span></label>
                     <input type="text" name="index" id="index" placeholder="np. s2222" value=""/>
                     <span id="errorIndex" className="errors-text"></span>
 
-                    <label htmlFor="birthDate">Data urodzenia:<abbr title="required" aria-label="required">*</abbr></label>
+                    <label htmlFor="birthDate">Data urodzenia:<span className="symbol-required">*</span></label>
                     <input type="date" name="birthDate" id="birthDate" value=""/>
                     <span id="errorBirthDate" className="errors-text"></span>
 
-                    <label htmlFor="email">E-mail:<abbr title="required" aria-label="required">*</abbr></label>
+                    <label htmlFor="email">E-mail:<span className="symbol-required">*</span></label>
                     <input type="text" name="email" id="email" placeholder="np. s222@pja.edu.pl" value=""/>
                     <span id="errorEmail" className="errors-text"></span>
 

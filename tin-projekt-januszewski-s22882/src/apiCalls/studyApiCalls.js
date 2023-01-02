@@ -1,10 +1,9 @@
-import {studyList, studyDetailsList} from "./studyApiMockData";
-
+const studentsBaseUrl = 'http://localhost:3000/api/students'
 export function getStudiesApiCall(){
-    return studyList;
+
 }
 
 export function getStudyByIdApiCall(studyId){
-    const study = studyDetailsList.find(study => study._id === studyId);
-    return study;
+    // const study = studyDetailsList.find(study => study._id === studyId);
+    // return study;
 }

@@ -11,7 +11,7 @@ class StudyForm extends React.Component {
             <main>
                 <h2>Nowa przynależność</h2>
                 <form className="form">
-                    <label htmlFor="student">Student:<abbr title="required" aria-label="required">*</abbr></label>
+                    <label htmlFor="student">Student:<span className="symbol-required">*</span></label>
                     <select id="student" name="studId" required>
                         <option value="">--- Wybierz studenta ---</option>
                         {allStuds.map(stud =>
@@ -20,7 +20,7 @@ class StudyForm extends React.Component {
                     </select>
                     <span id="errorStudent" className="errors-text"></span>
 
-                    <label htmlFor="group">Grupa:<abbr title="required" aria-label="required">*</abbr></label>
+                    <label htmlFor="group">Grupa:<span className="symbol-required">*</span></label>
                     <select id="group" name="groupId" required>
                         <option value="">--- Wybierz grupę ---</option>
                         {allGroups.map(group =>

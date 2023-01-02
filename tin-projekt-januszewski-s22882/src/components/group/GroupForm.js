@@ -7,11 +7,11 @@ class GroupForm extends React.Component {
             <main>
                 <h2>Nowa grupa</h2>
                 <form className="form">
-                    <label htmlFor="shortcut">Skrót:<abbr title="required" aria-label="required">*</abbr></label>
+                    <label htmlFor="shortcut">Skrót:<span className="symbol-required">*</span></label>
                     <input type="text" name="shortcut" id="shortcut" placeholder="np. 2022Z-TIN-12c" value=""/>
                     <span id="errorShortcut" className="errors-text"></span>
 
-                    <label htmlFor="course">Przedmiot:<abbr title="required" aria-label="required">*</abbr></label>
+                    <label htmlFor="course">Przedmiot:<span className="symbol-required">*</span></label>
                     <input type="text" name="course" id="course" placeholder="np. TIN" value=""/>
                     <span id="errorCourse" className="errors-text"></span>
 
@@ -19,7 +19,7 @@ class GroupForm extends React.Component {
                     <input type="text" name="faculty" id="faculty" value=""/>
                     <span id="errorFaculty" className="errors-text"></span>
 
-                    <label htmlFor="capacity">Liczba miejsc:<abbr title="required" aria-label="required">*</abbr></label>
+                    <label htmlFor="capacity">Liczba miejsc:<span className="symbol-required">*</span></label>
                     <input type="number" name="capacity" id="capacity" placeholder="Liczba całkowita od 1 do 150" value=""/>
                     <span id="errorCapacity" className="errors-text"></span>
 
