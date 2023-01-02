@@ -3,7 +3,7 @@ import {Link, useParams} from "react-router-dom";
 import {getStudentByIdApiCall} from "../../apiCalls/studentApiCalls";
 import {getFormattedDate} from "../../helpers/dateHelper"
 
-function EmployeeDetails() {
+function StudentDetails() {
     let { studId } = useParams()
     studId = parseInt(studId)
     const stud = getStudentByIdApiCall(studId)
@@ -16,7 +16,7 @@ function EmployeeDetails() {
             <p>Indeks: {stud.index} </p>
             <p>Data urodzenia: {getFormattedDate(stud.birthDate)} </p>
             <p>E-mail: {stud.email} </p>
-            <h2>Szczegóły przynależności</h2>
+            <h2>Szczegóły grup studenta</h2>
             <table className="table-list">
                 <thead>
                 <tr>
@@ -44,4 +44,4 @@ function EmployeeDetails() {
         </main>
     )
 }
-export default EmployeeDetails
+export default StudentDetails
