@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {getGroupsApiCall} from "../apiCalls/groupApiCalls";
+import {getGroupsApiCall} from "../../apiCalls/groupApiCalls";
 
 function GroupList() {
     const groupList = getGroupsApiCall();

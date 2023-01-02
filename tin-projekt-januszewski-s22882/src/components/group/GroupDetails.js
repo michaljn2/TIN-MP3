@@ -1,6 +1,6 @@
 import React from "react";
 import {Link, useParams} from "react-router-dom";
-import {getGroupByIdApiCall} from "../apiCalls/groupApiCalls";
+import {getGroupByIdApiCall} from "../../apiCalls/groupApiCalls";
 
 function GroupDetails() {
     let { groupId } = useParams()
@@ -32,7 +32,7 @@ function GroupDetails() {
                             <td>{study.student.firstName}</td>
                             <td>{study.student.lastName}</td>
                             <td>{study.student.index}</td>
-                            <td>{study.grade}</td>
+                            <td>{study.grade ? study.grade : ""}</td>
                             <td>{(study.itn === 1) ? 'tak' : 'nie'}</td>
                         </tr>
                 )}

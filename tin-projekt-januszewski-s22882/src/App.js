@@ -11,9 +11,13 @@ import Footer from "./components/fragments/Footer";
 import StudentList from "./components/student/StudentList";
 import StudentDetails from "./components/student/StudentDetails";
 import StudentForm from "./components/student/StudentForm";
-import GroupList from "./group/GroupList";
-import GroupDetails from "./group/GroupDetails";
-import GroupForm from "./group/GroupForm";
+import GroupList from "./components/group/GroupList";
+import GroupDetails from "./components/group/GroupDetails";
+import GroupForm from "./components/group/GroupForm";
+import StudyList from "./components/study/StudyList";
+import StudyDetails from "./components/study/StudyDetails";
+import StudyForm from "./components/study/StudyForm";
+
 
 function App() {
   return (
@@ -31,6 +35,10 @@ function App() {
                   <Route exact path="/groups/details/:groupId" element={<GroupDetails/>} />
                   <Route exact path="/groups/add" element={<GroupForm/>} />
                   <Route exact path="/groups/edit/:groupId" element={<GroupForm/>} />
+                  <Route exact path="/studies" element={<StudyList/>} />
+                  <Route exact path="/studies/details/:studyId" element={<StudyDetails/>} />
+                  <Route exact path="/studies/add" element={<StudyForm/>} />
+                  <Route exact path="/studies/edit/:studyId" element={<StudyForm/>} />
               </Routes>
               <Footer/>
           </div>

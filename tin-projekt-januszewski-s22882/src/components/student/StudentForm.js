@@ -8,7 +8,7 @@ class StudentForm extends React.Component {
                 <h2>Nowy student</h2>
                 <form className="form">
                     <label htmlFor="firstName">Imię:<abbr title="required" aria-label="required">*</abbr></label>
-                    <input type="text" name="firstName" id="firstName" placeholder="2-60 znaków" value=""/>
+                    <input type="text" name="firstName" id="firstName" placeholder="2-60 znaków"/>
                     <span id="errorFirstName" className="errors-text"></span>
 
                     <label htmlFor="lastName">Imię:<abbr title="required" aria-label="required">*</abbr></label>
