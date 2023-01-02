@@ -24,7 +24,7 @@ function StudentList() {
                         <td>{stud.index}</td>
                         <td>
                             <ul className="list-actions">
-                                <li><Link to={`students/details/${stud._id}`} className="list-actions-button-details">
+                                <li><Link to={`/students/details/${stud._id}`} className="list-actions-button-details">
                                     <img src="/public/img/INFO.png" alt="Details" className="action-icon"/>
                                 </Link></li>
                                 <li><Link to={`students/edit/${stud._id}`} className="list-actions-button-edit">

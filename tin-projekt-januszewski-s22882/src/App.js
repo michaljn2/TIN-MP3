@@ -9,6 +9,7 @@ import Navigation from "./components/fragments/Navigation";
 import MainContent from "./components/fragments/MainContent";
 import Footer from "./components/fragments/Footer";
 import StudentList from "./components/student/StudentList";
+import StudentDetails from "./components/student/StudentDetails";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Routes>
                   <Route path="/" element={<MainContent/>} />
                   <Route path="/students" element={<StudentList/>} />
+                  <Route exact path="/students/details/:studId" element={<StudentDetails/>} />
               </Routes>
               <Footer/>
           </div>
