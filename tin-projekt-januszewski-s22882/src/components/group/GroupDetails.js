@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {getGroupByIdApiCall} from "../../apiCalls/groupApiCalls";
 import GroupDetailsData from "./GroupDetailsData";
 class GroupDetails extends React.Component {
