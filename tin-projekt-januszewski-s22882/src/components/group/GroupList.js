@@ -1,46 +1,61 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {getGroupsApiCall} from "../../apiCalls/groupApiCalls";
+import GroupListTable from "./GroupListTable";
 
-function GroupList() {
-    const groupList = getGroupsApiCall();
-    return (
-        <main>
-            <h2>Lista grup</h2>
-            <table className="table-list">
-                <thead>
-                <tr>
-                    <th>Skrót</th>
-                    <th>Przedmiot</th>
-                    <th>Liczba miejsc</th>
-                    <th>Akcje</th>
-                </tr>
-                </thead>
-                <tbody>
-                {groupList.map(group => (
-                    <tr key={group._id}>
-                        <td>{group.shortcut}</td>
-                        <td>{group.course}</td>
-                        <td>{group.capacity}</td>
-                        <td>
-                            <ul className="list-actions">
-                                <li><Link to={`/groups/details/${group._id}`} className="list-actions-button-details">
-                                    <img src="/public/img/INFO.png" alt="Details" className="action-icon"/>
-                                </Link></li>
-                                <li><Link to={`/groups/edit/${group._id}`} className="list-actions-button-edit">
-                                    <img src="/public/img/EDIT.png" alt="Edit" className="action-icon"/>
-                                </Link></li>
-                                <li><Link to={`/groups/delete/${group._id}`} className="list-actions-button-delete">
-                                    <img src="/public/img/DELETE.png" alt="Delete" className="action-icon"/>
-                                </Link></li>
-                            </ul>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-            <p><Link to="/groups/add" className="button-add">Dodaj nową grupę</Link></p>
-        </main>
-    )
+class GroupList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+            isLoaded: false,
+            groups: []
+        }
+    }
+
+    fetchGroupList = () => {
+        getGroupsApiCall()
+            .then(res => res.json())
+            .then(
+                data => {
+                    this.setState({
+                        isLoaded: true,
+                        groups: data
+                    });
+                },
+                error => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
+
+    componentDidMount() {
+        this.fetchGroupList();
+    }
+
+    render() {
+        const {error, isLoaded, groups} = this.state;
+        let content;
+        if (error) {
+            content = <p>Błąd: {error.message}</p>
+        } else if (!isLoaded) {
+            content = <p>Ladowanie danych grup...</p>
+        } else {
+            content = <GroupListTable groupList={groups}/>
+        }
+        return (
+            <main>
+                <h2>Lista grup</h2>
+                {content}
+                <p className="form-buttons">
+                    <Link to="/groups/add" className="button-add">Dodaj nową grupę</Link>
+                </p>
+            </main>
+        )
+    }
+
 }
 export default GroupList

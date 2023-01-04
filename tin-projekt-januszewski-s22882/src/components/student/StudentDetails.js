@@ -1,47 +1,77 @@
 import React from "react";
-import {Link, useParams} from "react-router-dom";
 import {getStudentByIdApiCall} from "../../apiCalls/studentApiCalls";
-import {getFormattedDate} from "../../helpers/dateHelper"
+import {Link} from 'react-router-dom'
+import StudentDetailsData from "./StudentDetailsData";
 
-function StudentDetails() {
-    let { studId } = useParams()
-    studId = parseInt(studId)
-    const stud = getStudentByIdApiCall(studId)
+class StudentDetails extends React.Component{
+    constructor(props) {
+        super(props);
+        let {studId} = this.props.match.params;
+        this.state = {
+            studId: studId,
+            stud: null,
+            error: null,
+            isLoaded: false,
+            message: null
+        }
+    }
 
-    return (
-        <main>
-            <h2>Szczegóły studenta</h2>
-            <p>Imię: {stud.firstName}</p>
-            <p>Nazwisko: {stud.lastName} </p>
-            <p>Indeks: {stud.index} </p>
-            <p>Data urodzenia: {getFormattedDate(stud.birthDate)} </p>
-            <p>E-mail: {stud.email} </p>
-            <h2>Szczegóły grup studenta</h2>
-            <table className="table-list">
-                <thead>
-                <tr>
-                    <th>Skrót grupy</th>
-                    <th>Przedmiot</th>
-                    <th>Ocena</th>
-                    <th>ITN</th>
-                </tr>
-                </thead>
-                <tbody>
-                {stud.studies.map(
-                    study =>
-                        <tr key={study._id}>
-                            <td>{study.group.shortcut}</td>
-                            <td>{study.group.course}</td>
-                            <td>{study.grade ? study.grade : ""}</td>
-                            <td>{(study.itn === 1) ? 'tak' : 'nie'}</td>
-                        </tr>
-                )}
-                </tbody>
-            </table>
-            <div className="form-buttons">
-                <Link to="/students" className="form-buttons-back">Powrót</Link>
-            </div>
-        </main>
-    )
+    fetchStudentDetails = () => {
+        getStudentByIdApiCall(this.state.studId)
+            .then(res => res.json())
+            .then(
+                data => {
+                    if(data.message) {
+                        this.setState({
+                            stud: null,
+                            message: data.message
+                        })
+                    } else {
+                        this.setState({
+                            stud: data,
+                            message: null
+                        })
+                    }
+                    this.setState({
+                        isLoaded: true
+                    })
+                },
+                error => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
+    }
+
+    componentDidMount() {
+        this.fetchStudentDetails()
+    }
+
+    render() {
+        const {stud, error, isLoaded, message} = this.state;
+        let content;
+
+        if(error) {
+            content = <p>Błąd: {error.message}</p>
+        } else if (!isLoaded) {
+            content = <p>Ladowanie danych studenta</p>
+        } else if (message) {
+            content = <p>{message}</p>
+        } else {
+            content = <StudentDetailsData studData = {stud}/>
+        }
+
+        return (
+            <main>
+                <h2>Szczegóły studenta</h2>
+                {content}
+                <div className="form-buttons">
+                    <Link to="/students" className="form-buttons-back">Powrót</Link>
+                </div>
+            </main>
+        )
+    }
 }
 export default StudentDetails

@@ -6,6 +6,7 @@ export function getStudentsApiCall() {
 }
 
 export function getStudentByIdApiCall (studId) {
-    // const stud = studentDetailsList.find(stud => stud._id === studId);
-    // return stud;
+    const url = `${studentsBaseUrl}/${studId}`;
+    const promise = fetch(url);
+    return promise;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     BrowserRouter as Router,
-    Routes,
+    Switch,
     Route,
 } from "react-router-dom";
 import Header from "./components/fragments/Header";
@@ -25,21 +25,21 @@ function App() {
           <div>
               <Header/>
               <Navigation/>
-              <Routes>
-                  <Route exact path="/" element={<MainContent/>} />
-                  <Route exact path="/students" element={<StudentList/>} />
-                  <Route exact path="/students/details/:studId" element={<StudentDetails/>} />
-                  <Route exact path="/students/add" element={<StudentForm/>} />
-                  <Route exact path="/students/edit/:studId" element={<StudentForm/>} />
-                  <Route exact path="/groups" element={<GroupList/>} />
-                  <Route exact path="/groups/details/:groupId" element={<GroupDetails/>} />
-                  <Route exact path="/groups/add" element={<GroupForm/>} />
-                  <Route exact path="/groups/edit/:groupId" element={<GroupForm/>} />
-                  <Route exact path="/studies" element={<StudyList/>} />
-                  <Route exact path="/studies/details/:studyId" element={<StudyDetails/>} />
-                  <Route exact path="/studies/add" element={<StudyForm/>} />
-                  <Route exact path="/studies/edit/:studyId" element={<StudyForm/>} />
-              </Routes>
+              <Switch>
+                  <Route exact path="/" component={MainContent} />
+                  <Route exact path="/students" component={StudentList} />
+                  <Route exact path="/students/details/:studId" component={StudentDetails} />
+                  <Route exact path="/students/add" component={StudentForm} />
+                  <Route exact path="/students/edit/:studId" component={StudentForm} />
+                  <Route exact path="/groups" component={GroupList} />
+                  <Route exact path="/groups/details/:groupId" component={GroupDetails} />
+                  <Route exact path="/groups/add" component={GroupForm} />
+                  <Route exact path="/groups/edit/:groupId" component={GroupForm} />
+                  <Route exact path="/studies" component={StudyList} />
+                  <Route exact path="/studies/details/:studyId" component={StudyDetails} />
+                  <Route exact path="/studies/add" component={StudyForm} />
+                  <Route exact path="/studies/edit/:studyId" component={StudyForm} />
+              </Switch>
               <Footer/>
           </div>
       </Router>
