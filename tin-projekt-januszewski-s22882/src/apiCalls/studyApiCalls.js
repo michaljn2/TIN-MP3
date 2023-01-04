@@ -1,9 +1,9 @@
-const studentsBaseUrl = 'http://localhost:3000/api/students'
+const studiesBaseUrl = 'http://localhost:3000/api/studies'
 export function getStudiesApiCall(){
-
+    return fetch(studiesBaseUrl);
 }
 
 export function getStudyByIdApiCall(studyId){
-    // const study = studyDetailsList.find(study => study._id === studyId);
-    // return study;
+    const url = `${studiesBaseUrl}/${studyId}`;
+    return fetch(url);
 }
