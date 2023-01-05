@@ -10,3 +10,16 @@ export function getStudentByIdApiCall (studId) {
     const promise = fetch(url);
     return promise;
 }
+
+export function addStudentApiCall(stud) {
+    const studString = JSON.stringify(stud);
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: studString
+    }
+    const promise = fetch(studentsBaseUrl, options);
+    return promise;
+}

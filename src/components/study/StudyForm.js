@@ -1,59 +1,149 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {getStudentsApiCall} from "../../apiCalls/studentApiCalls";
+import {getStudentByIdApiCall, getStudentsApiCall} from "../../apiCalls/studentApiCalls";
 import {getGroupsApiCall} from "../../apiCalls/groupApiCalls";
+import formMode from '../../helpers/formHelper'
+import {checkRequired, checkTextLengthRange, checkIndex,
+    checkEmail, checkDate, checkDateBefore} from '../../helpers/validationCommon';
 
 class StudyForm extends React.Component {
-    render() {
-        const allStuds = getStudentsApiCall();
-        const allGroups = getGroupsApiCall();
-        return (
-            <main>
-                <h2>Nowa przynależność</h2>
-                <form className="form">
-                    <label htmlFor="student">Student:<span className="symbol-required">*</span></label>
-                    <select id="student" name="studId" required>
-                        <option value="">--- Wybierz studenta ---</option>
-                        {allStuds.map(stud =>
-                            (<option key={stud._id} value={stud._id} label={stud.firstName + " " + stud.lastName + " " + stud.index}></option>)
-                        )}
-                    </select>
-                    <span id="errorStudent" className="errors-text"></span>
+    constructor(props) {
+        super(props);
+        const paramsStudId = props.match.params.studId;
+        const currentFormMode = paramsStudId ? formMode.EDIT : formMode.NEW;
 
-                    <label htmlFor="group">Grupa:<span className="symbol-required">*</span></label>
-                    <select id="group" name="groupId" required>
-                        <option value="">--- Wybierz grupę ---</option>
-                        {allGroups.map(group =>
-                            (<option key={group._id} value={group._id} label={group.shortcut}></option>)
-                        )}
-                    </select>
-                    <span id="errorGroup" className="errors-text"></span>
-
-                    <label htmlFor="itn">ITN:</label>
-                    <input type="checkbox" name="itn" id="itn" value="1"/>
-                    <span id="errorITN" className="errors-text"></span>
-
-                    <label htmlFor="grade">Ocena:</label>
-                    <select name="birthDate" id="birthDate" value="">
-                        <option value="" selected>-- Wybierz ocenę --</option>
-                        <option value="2.0">2</option>
-                        <option value="3.0">3</option>
-                        <option value="3.5">3.5</option>
-                        <option value="4.0">4</option>
-                        <option value="4.5">4.5</option>
-                        <option value="5.0">5</option>
-                    </select>
-                    <span id="errorGrade" className="errors-text"></span>
-
-                    <div className="form-buttons">
-                        <p id="errorsSummary" className="errors-text"></p>
-                        <input className="form-buttons-submit" type="submit" value="Dodaj"/>
-                        <Link to="/studies" className="form-buttons-cancel">Anuluj</Link>
-                    </div>
-                </form>
-            </main>
-        )
+        this.state = {
+            studId: paramsStudId,
+            stud: {
+                firstName: '',
+                lastName: '',
+                index: '',
+                birthDate: '',
+                email: ''
+            },
+            errors:{
+                firstName: '',
+                lastName: '',
+                index: '',
+                birthDate: '',
+                email: ''
+            },
+            formMode: currentFormMode,
+            redirect: false,
+            error: null
+        }
     }
+
+    fetchStudentDetails = () => {
+        getStudentByIdApiCall(this.state.studId)
+            .then(res => res.json())
+            .then(
+                data => {
+                    if(data.message){
+                        this.setState({
+                            message: data.message
+                        })
+                    } else {
+                        this.setState({
+                            stud: data,
+                            message: null
+                        })
+                    }
+                    this.setState({
+                        isLoaded: true
+                    })
+                },
+                error => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    })
+                }
+            )
+    }
+
+    componentDidMount = () => {
+        const currentFormMode = this.state.formMode;
+        if(currentFormMode === formMode.EDIT){
+            this.fetchStudentDetails();
+        }
+    }
+
+    handleChange = (event) => {
+        const {name, value} = event.target;
+        const stud = {...this.state.stud}
+        stud[name] = value;
+
+        const errorMessage = this.validationField(name, value);
+        const errors = {...this.state.errors};
+        errors[name] = errorMessage;
+
+        this.setState({
+            stud: stud,
+            errors: errors
+        })
+    }
+
+    validateField = (fieldName, fieldValue) => {
+        let errorMessage = '';
+        if(fieldName === 'firstName'){
+            if (!checkRequired(fieldValue)) {
+                errorMessage = 'Pole jest wymagane'
+            } else if (!checkTextLengthRange(fieldValue, 2, 60 )) {
+               errorMessage = "Pole powinno zawierać od 2 do 60 znaków"
+            }
+        }
+
+        if(fieldName === 'lastName'){
+            if (!checkRequired(fieldValue)) {
+                errorMessage = 'Pole jest wymagane'
+            } else if (!checkTextLengthRange(fieldValue, 2, 60 )) {
+                errorMessage = "Pole powinno zawierać od 2 do 60 znaków"
+            }
+        }
+
+        if (fieldName === 'index'){
+            if (!checkRequired(fieldValue)) {
+                errorMessage = "Pole jest wymagane"
+            } else if (!checkIndex(fieldValue)) {
+                errorMessage = "To pole musi zawierać 's' oraz 5-znakowy numer studenta (np.s2222)"
+            }
+        }
+
+        let nowDate = new Date(),
+            month = '' + (nowDate.getMonth() + 1),
+            day = '' + nowDate.getDate(),
+            year = nowDate.getFullYear() - 18;
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+        const nowString = [year, month, day].join('-');
+
+        if(fieldName === 'birthDate'){
+            if (!checkRequired(fieldValue)) {
+                errorMessage = "Pole jest wymagane"
+            } else if (!checkDate(fieldValue)) {
+                errorMessage = "To pole musi zawierać datę w formacie yyyy-MM-dd (np. 2001-01-11)"
+            } else if (!checkDateBefore(fieldValue, nowString)) {
+                errorMessage = "Student musi mieć co najmniej 18 lat"
+            }
+        }
+
+        if (fieldName === 'email'){
+            if(!checkRequired(fieldValue)){
+                errorMessage = "To pole jest wymagane"
+            } else if (!checkTextLengthRange(fieldValue, 5, 60)){
+                errorMessage = "To pole musi zawierać od 5 do 60 znaków"
+            } else if(!checkEmail(fieldValue)){
+                errorMessage = "To pole musi zawierać poprawny adres email"
+            }
+        }
+        return errorMessage;
+
+    }
+
 }
 
 export default StudyForm
