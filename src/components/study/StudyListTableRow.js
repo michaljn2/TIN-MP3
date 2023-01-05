@@ -10,9 +10,15 @@ function StudyListTableRow (props) {
             <td>{study.grade ? study.grade : "brak"}</td>
             <td>
                 <ul className="list-actions">
-                    <li><Link to={`studies/details/${study._id}`} className="list-actions-button-details">Szczegóły</Link></li>
-                    <li><Link to={`studies/edit/${study._id}`} className="list-actions-button-edit">Edytuj</Link></li>
-                    <li><Link to={`studies/delete/${study._id}`} className="list-actions-button-delete">Usuń</Link></li>
+                    <li><Link to={`/studies/details/${study._id}`} className="list-actions-button-details">
+                        <img src="/public/img/INFO.png" alt="Details" className="action-icon"/>
+                    </Link></li>
+                    <li><Link to={`/studies/edit/${study._id}`} className="list-actions-button-edit">
+                        <img src="/public/img/EDIT.png" alt="Edit" className="action-icon"/>
+                    </Link></li>
+                    <li><Link to={`/studies/delete/${study._id}`} className="list-actions-button-delete">
+                        <img src="/public/img/DELETE.png" alt="Delete" className="action-icon"/>
+                    </Link></li>
                 </ul>
             </td>
         </tr>
