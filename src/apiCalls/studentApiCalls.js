@@ -23,3 +23,17 @@ export function addStudentApiCall(stud) {
     const promise = fetch(studentsBaseUrl, options);
     return promise;
 }
+
+export function updateStudentApiCall(studId, stud) {
+    const studString = JSON.stringify(stud);
+    const url = `${studentsBaseUrl}/${studId}`
+    const options = {
+        method: 'PUT',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: studString
+    }
+    const promise = fetch(url, options);
+    return promise;
+}

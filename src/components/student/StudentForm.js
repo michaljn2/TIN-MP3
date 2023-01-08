@@ -1,8 +1,12 @@
 import React from "react";
-import {getStudentByIdApiCall} from "../../apiCalls/studentApiCalls";
+import {getStudentByIdApiCall, addStudentApiCall, updateStudentApiCall} from "../../apiCalls/studentApiCalls";
 import formMode from '../../helpers/formHelper'
 import {checkRequired, checkTextLengthRange, checkIndex,
     checkEmail, checkDate, checkDateBefore} from '../../helpers/validationCommon';
+import {Redirect} from "react-router-dom";
+import FormInput from "../form/FormInput";
+import FormButtons from "../form/FormButtons";
+import {getFormattedDate} from "../../helpers/dateHelper";
 
 class StudentForm extends React.Component {
     constructor(props) {
@@ -72,7 +76,7 @@ class StudentForm extends React.Component {
         const stud = {...this.state.stud}
         stud[name] = value;
 
-        const errorMessage = this.validationField(name, value);
+        const errorMessage = this.validateField(name, value);
         const errors = {...this.state.errors};
         errors[name] = errorMessage;
 
@@ -224,6 +228,88 @@ class StudentForm extends React.Component {
         }
         return false;
     }
-}
 
+    render() {
+        const {redirect} = this.state;
+        if(redirect){
+            const currentFormMode = this.state.formMode;
+            const notice = currentFormMode === formMode.NEW ? 'Pomyślnie dodano nowego studenta' : 'Pomyślnie zaktualizowano dane studenta';
+            return(
+                <Redirect to={{
+                    pathname: "/students/",
+                    state: {
+                        notice: notice
+                    }
+                }} />
+            )
+        }
+        const errorsSummary = this.hasErrors() ? 'Formularz zawiera błędy' : '';
+        const fetchError = this.state.error ? `Błąd: ${this.state.error.message}` : '';
+        const pageTitle = this.state.formMode === formMode.NEW ? 'Dodawanie nowego studenta' : 'Edycja studenta';
+
+        const globalErrorMessage = errorsSummary || fetchError || this.state.message;
+        return (
+            <main>
+                <h2>{pageTitle}</h2>
+                <form className="form" onSubmit={this.handleSubmit}>
+                    <FormInput
+                        type="text"
+                        label="Imię"
+                        required
+                        error={this.state.errors.firstName}
+                        name="firstName"
+                        placeholder="2-60 znaków"
+                        onChange={this.handleChange}
+                        value={this.state.stud.firstName}
+                    />
+                    <FormInput
+                        type="text"
+                        label="Nazwisko"
+                        required
+                        error={this.state.errors.lastName}
+                        name="lastName"
+                        placeholder="2-60 znaków"
+                        onChange={this.handleChange}
+                        value={this.state.stud.lastName}
+                    />
+                    <FormInput
+                        type="text"
+                        label="Indeks"
+                        required
+                        error={this.state.errors.index}
+                        name="index"
+                        placeholder="np. s22222"
+                        onChange={this.handleChange}
+                        value={this.state.stud.index}
+                    />
+                    <FormInput
+                        type="date"
+                        label="Data urodzenia"
+                        required
+                        error={this.state.errors.birthDate}
+                        name="birthDate"
+                        placeholder="yyyy-MM-dd"
+                        onChange={this.handleChange}
+                        value={getFormattedDate(this.state.stud.birthDate)}
+                    />
+                    <FormInput
+                        type="text"
+                        label="email"
+                        required
+                        error={this.state.errors.email}
+                        name="email"
+                        placeholder="np. s1@pja.edu.pl"
+                        onChange={this.handleChange}
+                        value={this.state.stud.email}
+                    />
+                    <FormButtons
+                        formMode={this.state.formMode}
+                        error={globalErrorMessage}
+                        cancelPath="/students"
+                    />
+                </form>
+            </main>
+        )
+    }
+}
 export default StudentForm
