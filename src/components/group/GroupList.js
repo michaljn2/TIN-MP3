@@ -6,10 +6,12 @@ import GroupListTable from "./GroupListTable";
 class GroupList extends React.Component {
     constructor(props) {
         super(props);
+        let notice = props.location.state && props.location.state.notice ? props.location.state.notice : '';
         this.state = {
             error: null,
             isLoaded: false,
-            groups: []
+            groups: [],
+            notice: notice
         }
     }
 

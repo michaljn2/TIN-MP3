@@ -10,4 +10,29 @@ export function getGroupByIdApiCall(groupId){
     return promise;
 }
 
-export 
+export function addGroupApiCall(group) {
+    const groupString = JSON.stringify(group);
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: groupString
+    };
+    const promise = fetch(groupsBaseUrl, options);
+    return promise;
+}
+
+export function updateGroupApiCall(groupId, group) {
+    const groupString = JSON.stringify(group);
+    const url = `${groupsBaseUrl}/${groupId}`;
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: groupString
+    };
+    const promise = fetch(url, options);
+    return promise;
+}
