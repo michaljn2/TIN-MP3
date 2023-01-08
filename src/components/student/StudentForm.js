@@ -21,14 +21,16 @@ class StudentForm extends React.Component {
                 lastName: '',
                 index: '',
                 birthDate: '',
-                email: ''
+                email: '',
+                password: ''
             },
             errors:{
                 firstName: '',
                 lastName: '',
                 index: '',
                 birthDate: '',
-                email: ''
+                email: '',
+                password: ''
             },
             formMode: currentFormMode,
             redirect: false,
@@ -142,8 +144,15 @@ class StudentForm extends React.Component {
                 errorMessage = "To pole musi zawierać poprawny adres email"
             }
         }
-        return errorMessage;
 
+        if (fieldName === 'password'){
+            if(!checkRequired(fieldValue)){
+                errorMessage = "To pole jest wymagane"
+            } else if(!checkTextLengthRange(fieldValue,5,30)){
+                errorMessage = "To pole musi zawierać od 5 do 30 znaków"
+            }
+        }
+        return errorMessage;
     }
 
     handleSubmit = (event) => {
@@ -301,6 +310,16 @@ class StudentForm extends React.Component {
                         placeholder="np. s1@pja.edu.pl"
                         onChange={this.handleChange}
                         value={this.state.stud.email}
+                    />
+                    <FormInput
+                        type="password"
+                        label="password"
+                        required
+                        error={this.state.errors.password}
+                        name="password"
+                        placeholder=""
+                        onChange={this.handleChange}
+                        value={this.state.stud.password}
                     />
                     <FormButtons
                         formMode={this.state.formMode}
