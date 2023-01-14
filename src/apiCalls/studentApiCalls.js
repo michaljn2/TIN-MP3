@@ -1,14 +1,12 @@
 const studentsBaseUrl = 'http://localhost:3000/api/students'
 
 export function getStudentsApiCall() {
-    const promise = fetch(studentsBaseUrl);
-    return promise;
+    return fetch(studentsBaseUrl);
 }
 
 export function getStudentByIdApiCall (studId) {
     const url = `${studentsBaseUrl}/${studId}`;
-    const promise = fetch(url);
-    return promise;
+    return fetch(url);
 }
 
 export function addStudentApiCall(stud) {
@@ -20,8 +18,7 @@ export function addStudentApiCall(stud) {
         },
         body: studString
     }
-    const promise = fetch(studentsBaseUrl, options);
-    return promise;
+    return fetch(studentsBaseUrl, options);
 }
 
 export function updateStudentApiCall(studId, stud) {
@@ -34,6 +31,5 @@ export function updateStudentApiCall(studId, stud) {
         },
         body: studString
     }
-    const promise = fetch(url, options);
-    return promise;
+    return fetch(url, options);
 }

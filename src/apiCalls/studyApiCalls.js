@@ -17,8 +17,7 @@ export function addStudyApiCall(study){
         },
         body: studyString
     };
-    const promise = fetch(studiesBaseUrl, options);
-    return promise;
+    return fetch(studiesBaseUrl, options);
 }
 export function updateStudyApiCall(studyId, study) {
     const studyString = JSON.stringify(study);
@@ -30,6 +29,5 @@ export function updateStudyApiCall(studyId, study) {
         },
         body: studyString
     };
-    const promise = fetch(url, options);
-    return promise;
+    return fetch(url, options);
 }
