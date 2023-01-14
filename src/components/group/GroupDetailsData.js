@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 function GroupDetailsData(props) {
     const group = props.groupData;
@@ -25,7 +26,7 @@ function GroupDetailsData(props) {
                         <tr key={study._id}>
                             <td>{study.student.firstName}</td>
                             <td>{study.student.lastName}</td>
-                            <td>{study.student.index}</td>
+                            <td><Link to={`/students/details/${study.student_id}`}>{study.student.index}</Link></td>
                             <td>{(study.grade) ? study.grade : "brak"}</td>
                             <td>{(study.itn === 1) ? "tak" : "nie"}</td>
                         </tr>

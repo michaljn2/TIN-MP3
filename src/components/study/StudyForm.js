@@ -70,12 +70,12 @@ class StudyForm extends React.Component {
         this.setState({
             gradeOptions: [
                 {label: "--- Wybierz ocenę ---", value: null},
-                {label: "2.0", value: 2.0},
-                {label: "3.0", value: 3.0},
-                {label: "3.5", value: 3.5},
-                {label: "4.0", value: 4.0},
-                {label: "4.5", value: 4.5},
-                {label: "5.0", value: 5.0}
+                {label: "2.0", value: '2.0'},
+                {label: "3.0", value: '3.0'},
+                {label: "3.5", value: '3.5'},
+                {label: "4.0", value: '4.0'},
+                {label: "4.5", value: '4.5'},
+                {label: "5.0", value: '5.0'}
             ]
         });
     }
@@ -136,6 +136,7 @@ class StudyForm extends React.Component {
     handleChange = (event) => {
         const {name, value} = event.target;
         const study = {...this.state.study}
+        // pole checkbox musi byc zmieniane recznie
         if (name === 'itn'){
             if (study['itn'] === true){
                 study['itn'] = false;

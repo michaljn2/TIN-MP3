@@ -1,5 +1,6 @@
 import React from "react";
 import {getFormattedDate} from "../../helpers/dateHelper";
+import {Link} from "react-router-dom";
 
 function StudentDetailsData(props) {
     const stud = props.studData;
@@ -24,7 +25,7 @@ function StudentDetailsData(props) {
                 {stud.studies.map(
                     study =>
                         <tr key={study._id}>
-                            <td>{study.group.shortcut}</td>
+                            <td><Link to={`/groups/details/${study.group_id}`}>{study.group.shortcut}</Link></td>
                             <td>{study.group.course}</td>
                             <td>{study.grade ? study.grade : "brak"}</td>
                             <td>{(study.itn === 1) ? "tak" : "nie"}</td>

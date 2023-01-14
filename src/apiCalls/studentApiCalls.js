@@ -33,3 +33,14 @@ export function updateStudentApiCall(studId, stud) {
     }
     return fetch(url, options);
 }
+
+export function deleteStudentApiCall(studId) {
+    const url = `${studentsBaseUrl}/${studId}`;
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    return fetch(url, options);
+}
