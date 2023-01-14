@@ -136,7 +136,15 @@ class StudyForm extends React.Component {
     handleChange = (event) => {
         const {name, value} = event.target;
         const study = {...this.state.study}
-        study[name] = value;
+        if (name === 'itn'){
+            if (study['itn'] === true){
+                study['itn'] = false;
+            } else {
+                study['itn'] = true;
+            }
+        } else {
+            study[name] = value;
+        }
 
         const errorMessage = this.validateField(name, value);
         const errors = {...this.state.errors};
@@ -295,6 +303,7 @@ class StudyForm extends React.Component {
                         name="itn"
                         onChange={this.handleChange}
                         value={this.state.study.itn}
+                        checked={this.state.study.itn === true}
                     />
                     <FormSelect
                         label="Ocena"

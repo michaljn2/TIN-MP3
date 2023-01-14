@@ -18,6 +18,7 @@ function FormInput(props) {
                 placeholder={props.placeholder}
                 value={props.value}
                 onChange={props.onChange}
+                checked={props.value === true}
             />
             <span id={errorSpanId} className="errors-text">{props.error}</span>
         </>
