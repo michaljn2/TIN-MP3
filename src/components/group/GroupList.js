@@ -46,7 +46,7 @@ class GroupList extends React.Component {
         if (error) {
             content = <p>{t('common.error')}: {error.message}</p>
         } else if (!isLoaded) {
-            content = <p>{t('group.form.details.loading')}...</p>
+            content = <p>{t('group.list.loading')}...</p>
         } else {
             content = <GroupListTable groupList={groups}/>
         }

@@ -1,8 +1,10 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 function StudentListTableRow(props) {
     const stud = props.studData;
+    const {t} = useTranslation();
     return (
         <tr>
             <td>{stud.firstName}</td>

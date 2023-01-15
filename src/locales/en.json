@@ -51,7 +51,8 @@
       "title": "Students",
       "addNew": "Add new student",
       "noData": "No students in database",
-      "pageTitle": "List of students"
+      "pageTitle": "List of students",
+      "loading": "Loading students data"
     },
     "form": {
       "studies": "History of studies",
@@ -65,7 +66,8 @@
       },
       "details": {
         "pageTitle": "Student details",
-        "loading": "Loading students data"
+        "loading": "Loading students data",
+        "tableHeader": "Student groups details"
       },
       "placeholder": {
         "firstName": "2-60 signs",
@@ -86,7 +88,8 @@
       "title": "Groups",
       "addNew": "Add new group",
       "noData": "No groups in database",
-      "pageTitle": "List of groups"
+      "pageTitle": "List of groups",
+      "loading": "Loading groups data"
     },
     "form": {
       "add": {
@@ -99,7 +102,7 @@
       },
       "details": {
         "pageTitle": "Group details",
-        "studs": "Students in group details",
+        "tableHeader": "Students in group details",
         "loading": "Loading group data"
       },
       "placeholder": {
@@ -136,7 +139,8 @@
         "btnLabel": "Save changes"
       },
       "details": {
-        "pageTitle": "Study details"
+        "pageTitle": "Study details",
+        "loading": "Loading studies details"
       }
     }
   },

@@ -2,6 +2,7 @@ import React from "react";
 import {getStudentByIdApiCall} from "../../apiCalls/studentApiCalls";
 import {Link} from 'react-router-dom'
 import StudentDetailsData from "./StudentDetailsData";
+import {withTranslation} from "react-i18next";
 
 class StudentDetails extends React.Component{
     constructor(props) {
@@ -50,13 +51,14 @@ class StudentDetails extends React.Component{
     }
 
     render() {
+        const {t} = this.props;
         const {stud, error, isLoaded, message} = this.state;
         let content;
 
         if(error) {
-            content = <p>Błąd: {error.message}</p>
+            content = <p>{t('common.error')}: {error.message}</p>
         } else if (!isLoaded) {
-            content = <p>Ladowanie danych studenta</p>
+            content = <p>{t('stud.form.details.loading')}</p>
         } else if (message) {
             content = <p>{message}</p>
         } else {
@@ -65,13 +67,13 @@ class StudentDetails extends React.Component{
 
         return (
             <main>
-                <h2>Szczegóły studenta</h2>
+                <h2>{t('stud.form.details.pageTitle')}</h2>
                 {content}
                 <div className="form-buttons">
-                    <Link to="/students" className="form-buttons-back">Powrót</Link>
+                    <Link to="/students" className="form-buttons-back">{t('form.actions.return')}</Link>
                 </div>
             </main>
         )
     }
 }
-export default StudentDetails
+export default withTranslation() (StudentDetails)

@@ -31,7 +31,7 @@ function GroupDetailsData(props) {
             )}
             </tbody>
         </table>;
-        tableHeader = <h2>{t('group.form.details.studs')}</h2>;
+        tableHeader = <h2>{t('group.form.details.tableHeader')}</h2>;
     }
     return (
         <React.Fragment>

@@ -52,7 +52,8 @@
       "title": "Studenci",
       "addNew": "Dodaj nowego studenta",
       "noData": "Brak studentów w bazie",
-      "pageTitle": "Lista studentów"
+      "pageTitle": "Lista studentów",
+      "loading": "Ladowanie danych studentów"
     },
     "form": {
       "studies": "Historia przynależności do grup",
@@ -66,7 +67,8 @@
       },
       "details": {
         "pageTitle": "Szczegóły studenta",
-        "loading": "Ladowanie danych studenta"
+        "loading": "Ladowanie danych studenta",
+        "tableHeader": "Szczegóły grup studenta"
       },
       "placeholder": {
         "firstName": "2-60 znaków",
@@ -87,7 +89,8 @@
       "title": "Grupy",
       "addNew": "Dodaj nową grupę",
       "noData": "Brak grup w bazie",
-      "pageTitle": "Lista grup"
+      "pageTitle": "Lista grup",
+      "loading": "Ladowanie danych grup"
     },
     "form": {
       "add": {
@@ -100,7 +103,7 @@
       },
       "details": {
         "pageTitle": "Szczegóły grupy",
-        "studs": "Szczegóły studentów grupy",
+        "tableHeader": "Szczegóły studentów grupy",
         "loading": "Ladowanie danych grupy"
       },
       "placeholder": {
@@ -137,7 +140,8 @@
         "btnLabel": "Zapisz zmiany"
       },
       "details": {
-        "pageTitle": "Szczegóły przynależności"
+        "pageTitle": "Szczegóły przynależności",
+        "loading": "Ladowanie danych przynależności"
       }
     }
   },

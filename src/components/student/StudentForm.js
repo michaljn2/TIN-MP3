@@ -7,6 +7,7 @@ import {Redirect} from "react-router-dom";
 import FormInput from "../form/FormInput";
 import FormButtons from "../form/FormButtons";
 import {getFormattedDate} from "../../helpers/dateHelper";
+import {withTranslation} from "react-i18next";
 
 class StudentForm extends React.Component {
     constructor(props) {
@@ -90,27 +91,28 @@ class StudentForm extends React.Component {
 
     validateField = (fieldName, fieldValue) => {
         let errorMessage = '';
+        const {t} = this.props;
         if(fieldName === 'firstName'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = 'Pole jest wymagane'
+                errorMessage = t('validation.required')
             } else if (!checkTextLengthRange(fieldValue, 2, 60 )) {
-                errorMessage = "Pole powinno zawierać od 2 do 60 znaków"
+                errorMessage = t('validation.stud.firstName')
             }
         }
 
         if(fieldName === 'lastName'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = 'Pole jest wymagane'
+                errorMessage = t('validation.required')
             } else if (!checkTextLengthRange(fieldValue, 2, 60 )) {
-                errorMessage = "Pole powinno zawierać od 2 do 60 znaków"
+                errorMessage = t('validation.stud.lastName')
             }
         }
 
         if (fieldName === 'index'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = "Pole jest wymagane"
+                errorMessage = t('validation.required')
             } else if (!checkIndex(fieldValue)) {
-                errorMessage = "To pole musi zawierać 's' oraz 5-znakowy numer studenta (np.s2222)"
+                errorMessage = t('validation.stud.index.regex')
             }
         }
 
@@ -127,29 +129,29 @@ class StudentForm extends React.Component {
 
         if(fieldName === 'birthDate'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = "Pole jest wymagane"
+                errorMessage = t('validation.required')
             } else if (!checkDate(fieldValue)) {
-                errorMessage = "To pole musi zawierać datę w formacie yyyy-MM-dd (np. 2001-01-11)"
+                errorMessage = t('validation.stud.birthDate.regex')
             } else if (!checkDateBefore(fieldValue, nowString)) {
-                errorMessage = "Student musi mieć co najmniej 18 lat"
+                errorMessage = t('validation.stud.birthDate.mature')
             }
         }
 
         if (fieldName === 'email'){
             if(!checkRequired(fieldValue)){
-                errorMessage = "To pole jest wymagane"
+                errorMessage = t('validation.required')
             } else if (!checkTextLengthRange(fieldValue, 5, 60)){
-                errorMessage = "To pole musi zawierać od 5 do 60 znaków"
+                errorMessage = t('validation.stud.email.range')
             } else if(!checkEmail(fieldValue)){
-                errorMessage = "To pole musi zawierać poprawny adres email"
+                errorMessage = t('validation.stud.email.regex')
             }
         }
 
         if (fieldName === 'password'){
             if(!checkRequired(fieldValue)){
-                errorMessage = "To pole jest wymagane"
+                errorMessage = t('validation.required')
             } else if(!checkTextLengthRange(fieldValue,5,30)){
-                errorMessage = "To pole musi zawierać od 5 do 30 znaków"
+                errorMessage = t('validation.password.range')
             }
         }
         return errorMessage;
@@ -240,6 +242,7 @@ class StudentForm extends React.Component {
 
     render() {
         const {redirect} = this.state;
+        const {t} = this.props;
         if(redirect){
             const currentFormMode = this.state.formMode;
             const notice = currentFormMode === formMode.NEW ? 'Pomyślnie dodano nowego studenta' : 'Pomyślnie zaktualizowano dane studenta';
@@ -252,9 +255,9 @@ class StudentForm extends React.Component {
                 }} />
             )
         }
-        const errorsSummary = this.hasErrors() ? 'Formularz zawiera błędy' : '';
-        const fetchError = this.state.error ? `Błąd: ${this.state.error.message}` : '';
-        const pageTitle = this.state.formMode === formMode.NEW ? 'Dodawanie nowego studenta' : 'Edycja studenta';
+        const errorsSummary = this.hasErrors() ? t('validation.invalidForm') : '';
+        const fetchError = this.state.error ? t('common.error')`: ${this.state.error.message}` : '';
+        const pageTitle = this.state.formMode === formMode.NEW ? t('stud.form.add.pageTitle') : t('stud.form.edit.pageTitle');
 
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;
         return (
@@ -263,57 +266,57 @@ class StudentForm extends React.Component {
                 <form className="form" onSubmit={this.handleSubmit}>
                     <FormInput
                         type="text"
-                        label="Imię"
+                        label={t('stud.fields.firstName')}
                         required
                         error={this.state.errors.firstName}
                         name="firstName"
-                        placeholder="2-60 znaków"
+                        placeholder={t('stud.form.placeholder.firstName')}
                         onChange={this.handleChange}
                         value={this.state.stud.firstName}
                     />
                     <FormInput
                         type="text"
-                        label="Nazwisko"
+                        label={t('stud.fields.lastName')}
                         required
                         error={this.state.errors.lastName}
                         name="lastName"
-                        placeholder="2-60 znaków"
+                        placeholder={t('stud.form.placeholder.lastName')}
                         onChange={this.handleChange}
                         value={this.state.stud.lastName}
                     />
                     <FormInput
                         type="text"
-                        label="Indeks"
+                        label={t('stud.fields.index')}
                         required
                         error={this.state.errors.index}
                         name="index"
-                        placeholder="np. s22222"
+                        placeholder={t('stud.form.placeholder.index')}
                         onChange={this.handleChange}
                         value={this.state.stud.index}
                     />
                     <FormInput
                         type="date"
-                        label="Data urodzenia"
+                        label={t('stud.fields.birthDate')}
                         required
                         error={this.state.errors.birthDate}
                         name="birthDate"
-                        placeholder="yyyy-MM-dd"
+                        placeholder=""
                         onChange={this.handleChange}
                         value={getFormattedDate(this.state.stud.birthDate)}
                     />
                     <FormInput
                         type="text"
-                        label="email"
+                        label={t('stud.fields.email')}
                         required
                         error={this.state.errors.email}
                         name="email"
-                        placeholder="np. s1@pja.edu.pl"
+                        placeholder={t('stud.form.placeholder.email')}
                         onChange={this.handleChange}
                         value={this.state.stud.email}
                     />
                     <FormInput
                         type="password"
-                        label="password"
+                        label={t('stud.fields.password')}
                         required
                         error={this.state.errors.password}
                         name="password"
@@ -331,4 +334,4 @@ class StudentForm extends React.Component {
         )
     }
 }
-export default StudentForm
+export default withTranslation() (StudentForm)

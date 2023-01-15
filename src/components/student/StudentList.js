@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {getStudentsApiCall} from "../../apiCalls/studentApiCalls";
 import StudentListTable from "./StudentListTable";
+import {withTranslation} from "react-i18next";
 
 class StudentList extends React.Component {
     constructor(props) {
@@ -38,21 +39,22 @@ class StudentList extends React.Component {
     }
 
     render() {
+        const {t} = this.props;
         const {error, isLoaded, students} = this.state;
         let content;
         if (error) {
-            content = <p>Błąd: {error.message}</p>
+            content = <p>{t('common.error')}: {error.message}</p>
         } else if (!isLoaded) {
-            content = <p>Ladowanie danych studentów...</p>
+            content = <p>{t('stud.list.loading')}...</p>
         } else {
             content = <StudentListTable studList={students}/>
         }
         return (
             <main>
-                <h2>Lista studentów</h2>
+                <h2>{t('stud.list.pageTitle')}</h2>
                 {content}
                 <p className="form-buttons">
-                    <Link to="/students/add" className="button-add">Dodaj nowego studenta</Link>
+                    <Link to="/students/add" className="button-add">{t('stud.list.addNew')}</Link>
                 </p>
             </main>
         )
@@ -60,4 +62,4 @@ class StudentList extends React.Component {
     }
 }
 
-export default StudentList
+export default withTranslation() (StudentList)

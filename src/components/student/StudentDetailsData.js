@@ -15,9 +15,9 @@ function StudentDetailsData(props) {
             <thead>
             <tr>
                 <th>{t('group.fields.shortcut')}</th>
-                <th>Przedmiot</th>
-                <th>Ocena</th>
-                <th>ITN</th>
+                <th>{t('group.fields.course')}</th>
+                <th>{t('study.fields.grade')}</th>
+                <th>{t('study.fields.itn')}</th>
             </tr>
             </thead>
             <tbody>
@@ -26,22 +26,22 @@ function StudentDetailsData(props) {
                     <tr key={study._id}>
                         <td><Link to={`/groups/details/${study.group_id}`}>{study.group.shortcut}</Link></td>
                         <td>{study.group.course}</td>
-                        <td>{study.grade ? study.grade : "brak"}</td>
-                        <td>{(study.itn === 1) ? "tak" : "nie"}</td>
+                        <td>{study.grade ? study.grade : t('common.lack')}</td>
+                        <td>{(study.itn === 1) ? t('common.yes') : t('common.no')}</td>
                     </tr>
 
             )}
             </tbody>
         </table>;
-        tableHeader = <h2>Szczegóły grup studenta</h2>;
+        tableHeader = <h2>{t('stud.form.details.tableHeader')}</h2>;
     }
     return (
         <React.Fragment>
-            <p>Imię: {stud.firstName} </p>
-            <p>Nazwisko: {stud.lastName} </p>
-            <p>Indeks: {stud.index} </p>
-            <p>Data urodzenia: {getFormattedDate(stud.birthDate)} </p>
-            <p>E-mail: {stud.email} </p>
+            <p>{t('stud.fields.firstName')}: {stud.firstName} </p>
+            <p>{t('stud.fields.lastName')}: {stud.lastName} </p>
+            <p>{t('stud.fields.index')}: {stud.index} </p>
+            <p>{t('stud.fields.birthDate')}: {getFormattedDate(stud.birthDate)} </p>
+            <p>{t('stud.fields.email')}: {stud.email} </p>
             {tableHeader}
             {studiesTable}
         </React.Fragment>
