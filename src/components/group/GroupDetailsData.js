@@ -1,20 +1,21 @@
 import React from "react";
 import {Link} from "react-router-dom";
-
+import {useTranslation} from "react-i18next";
 function GroupDetailsData(props) {
     const group = props.groupData;
     let studiesTable;
     let tableHeader;
     const studiesLength = group.studies.length;
+    const { t } = useTranslation();
     if (studiesLength > 0){
         studiesTable = <table className="table-list">
             <thead>
             <tr>
-                <th>Imię</th>
-                <th>Nazwisko</th>
-                <th>Indeks</th>
-                <th>Ocena</th>
-                <th>ITN</th>
+                <th>{t('stud.fields.firstName')}</th>
+                <th>{t('stud.fields.lastName')}</th>
+                <th>{t('stud.fields.index')}</th>
+                <th>{t('study.fields.grade')}</th>
+                <th>{t('study.fields.itn')}</th>
             </tr>
             </thead>
             <tbody>
@@ -24,22 +25,20 @@ function GroupDetailsData(props) {
                         <td>{study.student.firstName}</td>
                         <td>{study.student.lastName}</td>
                         <td><Link to={`/students/details/${study.student_id}`}>{study.student.index}</Link></td>
-                        <td>{(study.grade) ? study.grade : "brak"}</td>
-                        <td>{(study.itn === 1) ? "tak" : "nie"}</td>
+                        <td>{(study.grade) ? study.grade : t('common.lack')}</td>
+                        <td>{(study.itn === 1) ? t('common.yes') : t('common.no')}</td>
                     </tr>
-
             )}
             </tbody>
         </table>;
-
-        tableHeader = <h2>Szczegóły studentów grupy</h2>;
+        tableHeader = <h2>{t('group.form.details.studs')}</h2>;
     }
     return (
         <React.Fragment>
-            <p>Skrót: {group.shortcut} </p>
-            <p>Przedmiot: {group.course} </p>
-            <p>Specjalizacja: {group.faculty ? group.faculty : "nie dotyczy"} </p>
-            <p>Liczba miejsc: {group.capacity} </p>
+            <p>{t('group.fields.shortcut')}: {group.shortcut} </p>
+            <p>{t('group.fields.course')}: {group.course} </p>
+            <p>{t('group.fields.faculty')}: {group.faculty ? group.faculty : t('common.lack')} </p>
+            <p>{t('group.fields.capacity')}: {group.capacity} </p>
             {tableHeader}
             {studiesTable}
         </React.Fragment>

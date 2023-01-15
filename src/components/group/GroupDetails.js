@@ -2,6 +2,8 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {getGroupByIdApiCall} from "../../apiCalls/groupApiCalls";
 import GroupDetailsData from "./GroupDetailsData";
+import {withTranslation} from "react-i18next";
+
 class GroupDetails extends React.Component {
     constructor(props) {
         super(props);
@@ -51,11 +53,12 @@ class GroupDetails extends React.Component {
     render() {
         const {group, error, isLoaded, message} = this.state;
         let content;
+        const { t } = this.props;
 
         if(error) {
-            content = <p>Błąd: {error.message}</p>
+            content = <p>{t('common.error')}: {error.message}</p>
         } else if (!isLoaded) {
-            content = <p>Ladowanie danych grupy</p>
+            content = <p>{t('group.form.details.loading')}</p>
         } else if (message) {
             content = <p>{message}</p>
         } else {
@@ -64,13 +67,13 @@ class GroupDetails extends React.Component {
 
         return (
             <main>
-                <h2>Szczegóły grupy</h2>
+                <h2>{t('group.form.details.pageTitle')}</h2>
                 {content}
                 <div className="form-buttons">
-                    <Link to="/groups" className="form-buttons-back">Powrót</Link>
+                    <Link to="/groups" className="form-buttons-back">{t('form.actions.return')}</Link>
                 </div>
             </main>
         )
     }
 }
-export default GroupDetails
+export default withTranslation()(GroupDetails)

@@ -1,12 +1,11 @@
 import React from "react";
-
+import {useTranslation} from "react-i18next";
 function MainContent() {
+    const { t } = useTranslation();
     return (
         <main>
-            <h2>Strona główna</h2>
-            <p>Aplikacja ta służy do zarządzania danymi o studentach, grupach przedmiotowych oraz przynależnością studentów
-                do tych grup. Ma ona ułatwić wgląd do danych takich jak: przynależność studenta do danej grupy przedmiotowej,
-                jego ocenach oraz ITNach.
+            <h2>{t('main-page.content')}</h2>
+            <p>{t('main-page.description')}
             </p>
         </main>
     )

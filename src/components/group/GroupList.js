@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {getGroupsApiCall} from "../../apiCalls/groupApiCalls";
 import GroupListTable from "./GroupListTable";
+import {withTranslation} from "react-i18next";
 
 class GroupList extends React.Component {
     constructor(props) {
@@ -39,25 +40,26 @@ class GroupList extends React.Component {
     }
 
     render() {
+        const {t} = this.props;
         const {error, isLoaded, groups} = this.state;
         let content;
         if (error) {
-            content = <p>Błąd: {error.message}</p>
+            content = <p>{t('common.error')}: {error.message}</p>
         } else if (!isLoaded) {
-            content = <p>Ladowanie danych grup...</p>
+            content = <p>{t('group.form.details.loading')}...</p>
         } else {
             content = <GroupListTable groupList={groups}/>
         }
         return (
             <main>
-                <h2>Lista grup</h2>
+                <h2>{t('group.list.pageTitle')}</h2>
                 {content}
                 <p className="form-buttons">
-                    <Link to="/groups/add" className="button-add">Dodaj nową grupę</Link>
+                    <Link to="/groups/add" className="button-add">{t('group.form.add.btnLabel')}</Link>
                 </p>
             </main>
         )
     }
 
 }
-export default GroupList
+export default withTranslation() (GroupList)

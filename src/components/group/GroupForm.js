@@ -7,6 +7,7 @@ import FormInput from "../form/FormInput";
 import FormButtons from "../form/FormButtons";
 import {getGroupByIdApiCall} from "../../apiCalls/groupApiCalls";
 import {addGroupApiCall, updateGroupApiCall} from "../../apiCalls/groupApiCalls";
+import {withTranslation} from "react-i18next";
 
 class GroupForm extends React.Component {
     constructor(props) {
@@ -85,30 +86,31 @@ class GroupForm extends React.Component {
     }
 
     validateField = (fieldName, fieldValue) => {
+        const {t} = this.props;
         let errorMessage = '';
         if(fieldName === 'shortcut'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = 'Pole jest wymagane'
+                errorMessage = t('validation.required');
             } else if (!checkShortcut(fieldValue)) {
-                errorMessage = "Skrót zawiera nazwę semestru, skrót przedmiotu oraz numer grupy oddzielone '-'"
+                errorMessage = t('validation.group.shortcut')
             }
         }
 
         if(fieldName === 'course'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = 'Pole jest wymagane'
+                errorMessage = t('validation.required')
             } else if (!checkCourse(fieldValue)) {
-                errorMessage = "To pole zawiera 2-3 duże litery"
+                errorMessage = t('validation.group.course')
             }
         }
 
         if(fieldName === 'capacity'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = "Pole jest wymagane"
+                errorMessage = t('validation.required')
             } else if (!checkInteger(fieldValue)) {
-                errorMessage = "To pole jest liczbą całkowitą"
+                errorMessage = t('validation.group.capacity.integer')
             } else if (!checkNumberRange(fieldValue, 1,150)) {
-                errorMessage = "Liczba miejsc musi być między 1 a 150"
+                errorMessage = t('validation.group.capacity.range')
             }
         }
 
@@ -200,6 +202,7 @@ class GroupForm extends React.Component {
 
     render() {
         const {redirect} = this.state;
+        const {t} = this.props;
         if(redirect){
             const currentFormMode = this.state.formMode;
             const notice = currentFormMode === formMode.NEW ? 'Pomyślnie dodano nową grupę' : 'Pomyślnie zaktualizowano dane grupy';
@@ -212,9 +215,9 @@ class GroupForm extends React.Component {
                 }} />
             )
         }
-        const errorsSummary = this.hasErrors() ? 'Formularz zawiera błędy' : '';
-        const fetchError = this.state.error ? `Błąd: ${this.state.error.message}` : '';
-        const pageTitle = this.state.formMode === formMode.NEW ? 'Dodawanie nowej grupy' : 'Edycja grupy';
+        const errorsSummary = this.hasErrors() ? t('validation.invalidForm') : '';
+        const fetchError = this.state.error ? t('common.error')`: ${this.state.error.message}` : '';
+        const pageTitle = this.state.formMode === formMode.NEW ? t('group.form.add.pageTitle') : t('group.form.edit.pageTitle');
 
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;
         return (
@@ -223,36 +226,36 @@ class GroupForm extends React.Component {
                 <form className="form" onSubmit={this.handleSubmit}>
                     <FormInput
                         type="text"
-                        label="Skrót"
+                        label={t('group.fields.shortcut')}
                         required
                         error={this.state.errors.shortcut}
                         name="shortcut"
-                        placeholder="np. 2021L-TIN-19c"
+                        placeholder={t('group.form.placeholder.shortcut')}
                         onChange={this.handleChange}
                         value={this.state.group.shortcut}
                     />
                     <FormInput
                         type="text"
-                        label="Przedmiot"
+                        label={t('group.fields.course')}
                         required
                         error={this.state.errors.course}
                         name="course"
-                        placeholder="np. TIN"
+                        placeholder={t('group.form.placeholder.course')}
                         onChange={this.handleChange}
                         value={this.state.group.course}
                     />
                     <FormInput
                         type="text"
-                        label="Specjalizacja"
+                        label={t('group.fields.faculty')}
                         error={this.state.errors.faculty}
                         name="faculty"
-                        placeholder="np. Bazy danych"
+                        placeholder={t('group.form.placeholder.faculty')}
                         onChange={this.handleChange}
                         value={this.state.group.faculty}
                     />
                     <FormInput
                         type="number"
-                        label="Liczba miejsc"
+                        label={t('group.fields.capacity')}
                         required
                         error={this.state.errors.capacity}
                         name="capacity"
@@ -271,4 +274,4 @@ class GroupForm extends React.Component {
     }
 }
 
-export default GroupForm
+export default withTranslation() (GroupForm)

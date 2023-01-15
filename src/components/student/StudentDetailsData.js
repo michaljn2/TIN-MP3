@@ -1,18 +1,20 @@
 import React from "react";
 import {getFormattedDate} from "../../helpers/dateHelper";
 import {Link} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 function StudentDetailsData(props) {
     const stud = props.studData;
     const studiesLength = stud.studies.length;
     let studiesTable;
     let tableHeader;
+    const {t} = useTranslation();
     if (studiesLength > 0){
         studiesTable =
         <table className="table-list">
             <thead>
             <tr>
-                <th>Skrót grupy</th>
+                <th>{t('group.fields.shortcut')}</th>
                 <th>Przedmiot</th>
                 <th>Ocena</th>
                 <th>ITN</th>
