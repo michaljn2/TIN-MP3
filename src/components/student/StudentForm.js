@@ -8,6 +8,7 @@ import FormInput from "../form/FormInput";
 import FormButtons from "../form/FormButtons";
 import {getFormattedDate} from "../../helpers/dateHelper";
 import {withTranslation} from "react-i18next";
+import {formValidationKeys} from "../../helpers/formHelper";
 
 class StudentForm extends React.Component {
     constructor(props) {
@@ -94,25 +95,25 @@ class StudentForm extends React.Component {
         const {t} = this.props;
         if(fieldName === 'firstName'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = t('validation.required')
+                errorMessage = formValidationKeys.required;
             } else if (!checkTextLengthRange(fieldValue, 2, 60 )) {
-                errorMessage = t('validation.stud.firstName')
+                errorMessage = formValidationKeys.firstName
             }
         }
 
         if(fieldName === 'lastName'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = t('validation.required')
+                errorMessage = formValidationKeys.required
             } else if (!checkTextLengthRange(fieldValue, 2, 60 )) {
-                errorMessage = t('validation.stud.lastName')
+                errorMessage = formValidationKeys.lastName
             }
         }
 
         if (fieldName === 'index'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = t('validation.required')
+                errorMessage = formValidationKeys.required
             } else if (!checkIndex(fieldValue)) {
-                errorMessage = t('validation.stud.index.regex')
+                errorMessage = formValidationKeys.index
             }
         }
 
@@ -129,29 +130,29 @@ class StudentForm extends React.Component {
 
         if(fieldName === 'birthDate'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = t('validation.required')
+                errorMessage = formValidationKeys.required
             } else if (!checkDate(fieldValue)) {
-                errorMessage = t('validation.stud.birthDate.regex')
+                errorMessage = formValidationKeys.birthDateRegex
             } else if (!checkDateBefore(fieldValue, nowString)) {
-                errorMessage = t('validation.stud.birthDate.mature')
+                errorMessage = formValidationKeys.birthDateMature
             }
         }
 
         if (fieldName === 'email'){
             if(!checkRequired(fieldValue)){
-                errorMessage = t('validation.required')
+                errorMessage = formValidationKeys.required
             } else if (!checkTextLengthRange(fieldValue, 5, 60)){
-                errorMessage = t('validation.stud.email.range')
+                errorMessage = formValidationKeys.emailRange
             } else if(!checkEmail(fieldValue)){
-                errorMessage = t('validation.stud.email.regex')
+                errorMessage = formValidationKeys.emailRegex
             }
         }
 
         if (fieldName === 'password'){
             if(!checkRequired(fieldValue)){
-                errorMessage = t('validation.required')
+                errorMessage = formValidationKeys.required
             } else if(!checkTextLengthRange(fieldValue,5,30)){
-                errorMessage = t('validation.password.range')
+                errorMessage = formValidationKeys.password
             }
         }
         return errorMessage;
@@ -256,7 +257,7 @@ class StudentForm extends React.Component {
             )
         }
         const errorsSummary = this.hasErrors() ? t('validation.invalidForm') : '';
-        const fetchError = this.state.error ? t('common.error')`: ${this.state.error.message}` : '';
+        const fetchError = this.state.error ? t('common.error')+`: ${this.state.error.message}` : '';
         const pageTitle = this.state.formMode === formMode.NEW ? t('stud.form.add.pageTitle') : t('stud.form.edit.pageTitle');
 
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;

@@ -216,7 +216,7 @@ class GroupForm extends React.Component {
             )
         }
         const errorsSummary = this.hasErrors() ? t('validation.invalidForm') : '';
-        const fetchError = this.state.error ? t('common.error')`: ${this.state.error.message}` : '';
+        const fetchError = this.state.error ? t('common.error')+`: ${this.state.error.message}` : '';
         const pageTitle = this.state.formMode === formMode.NEW ? t('group.form.add.pageTitle') : t('group.form.edit.pageTitle');
 
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;

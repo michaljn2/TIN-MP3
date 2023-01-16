@@ -277,7 +277,7 @@ class StudyForm extends React.Component {
             )
         }
         const errorsSummary = this.hasErrors() ? t('validation.invalidForm') : '';
-        const fetchError = this.state.error ? t('common.error')`: ${this.state.error.message}` : '';
+        const fetchError = this.state.error ? t('common.error')+`: ${this.state.error.message}` : '';
         const pageTitle = this.state.formMode === formMode.NEW ? t('study.form.add.pageTitle') : t('study.form.edit.pageTitle');
 
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;

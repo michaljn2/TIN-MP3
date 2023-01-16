@@ -154,33 +154,21 @@
   "validation": {
     "required": "To pole jest wymagane",
     "invalidForm": "Formularz zawiera błędy",
-    "stud": {
-      "firstName": "To pole musi zawierać od 2 do 60 znaków",
-      "lastName": "To pole musi zawierać od 2 do 60 znaków",
-      "index": {
-        "regex": "To pole musi zawierać 's' oraz 5-znakowy numer studenta (np.s2222)"
-      },
-      "birthDate": {
-        "regex": "To pole musi zawierać datę w formacie yyyy-MM-dd (np. 2001-01-11)",
-        "mature": "Student musi mieć co najmniej 18 lat"
-      },
-      "email": {
-        "range": "To pole musi zawierać od 5 do 60 znaków",
-        "regex": "To pole musi zawierać poprawny adres email"
-      }
-    },
-    "group": {
-      "shortcut": "Skrót zawiera nazwę semestru, skrót przedmiotu oraz numer grupy oddzielone '-'",
-      "course": "To pole zawiera 2-3 duże litery",
-      "capacity": {
-        "integer": "To pole jest liczbą całkowitą",
-        "range": "Liczba miejsc musi być między 1 a 150"
-      }
-    },
-    "password": {
-      "range": "To pole powinno mieć 5-30 znaków"
-    },
-    "repeatPassword": "To pole powinno być takie samo jak pole 'Nowe hasło'"
+    "firstName": "To pole musi zawierać od 2 do 60 znaków",
+    "lastName": "To pole musi zawierać od 2 do 60 znaków",
+    "index": "To pole musi zawierać 's' oraz 5-znakowy numer studenta (np.s2222)",
+    "birthDate-regex": "To pole musi zawierać datę w formacie yyyy-MM-dd (np. 2001-01-11)",
+    "birthDate-mature": "Student musi mieć co najmniej 18 lat",
+    "email-range": "To pole musi zawierać od 5 do 60 znaków",
+    "email-regex": "To pole musi zawierać poprawny adres email",
+    "shortcut": "Skrót zawiera nazwę semestru, skrót przedmiotu oraz numer grupy oddzielone '-'",
+    "course": "To pole zawiera 2-3 duże litery",
+    "capacity-integer": "To pole jest liczbą całkowitą",
+    "capacity-range": "Liczba miejsc musi być między 1 a 150",
+    "password": "To pole powinno mieć 5-30 znaków",
+    "repeatPassword": "To pole powinno być takie samo jak pole 'Nowe hasło'",
+    "courseFromShortcut": "Przedmiot powinien być taki sam jak w skrócie",
+    "emailFromIndex": "Email powinien zawierać indeks studenta i domenę @pja.edu.pl"
   },
   "common": {
     "yes": "tak",

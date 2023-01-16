@@ -153,38 +153,21 @@
   "validation": {
     "required": "This field is required",
     "invalidForm": "Form has mistakes",
-    "stud": {
-      "firstName": "This field must contain 2-60 signs",
-      "lastName": "This field must contain 2-60 signs",
-      "index": {
-        "regex": "This field must contain 's' and max 5 digits student number"
-      },
-      "birthDate": {
-        "regex": "This field must contain date in yyyy-MM-dd format (ex. 2001-01-11)",
-        "mature": "Student must be at least 18 years old"
-      },
-      "email": {
-        "range": "This field must contain 5-60 signs",
-        "regex": "This field must contain proper email address"
-      },
-      "password": {
-        "range": "This field must contain 5-30 signs"
-      }
-    },
-    "group": {
-      "shortcut": "Shortcut contains name of semester, course shortcut and group number separated by '-'",
-      "course": "This field must contain 2-3 big letters",
-      "capacity": {
-        "integer": "This field must be an integer",
-        "range": "Capacity must be between 1 and 150"
-      }
-    },
-    "changePassword": {
-      "password": {
-        "range": "This field must contain 5-30 signs"
-      },
-      "repeatPassword": "This field must be the same as password"
-    }
+    "firstName": "This field must contain 2-60 signs",
+    "lastName": "This field must contain 2-60 signs",
+    "index": "This field must contain 's' and max 5 digits student number",
+    "birthDateRegex": "This field must contain date in yyyy-MM-dd format (ex. 2001-01-11)",
+    "birthDateMature": "Student must be at least 18 years old",
+    "emailRange": "This field must contain 5-60 signs",
+    "emailRegex": "This field must contain proper email address",
+    "shortcut": "Shortcut contains name of semester, course shortcut and group number separated by '-'",
+    "course": "This field must contain 2-3 big letters",
+    "capacityInteger": "This field must be an integer",
+    "capacityRange": "Capacity must be between 1 and 150",
+    "password": "This field must contain 5-30 signs",
+    "repeatPassword": "This field must be the same as password",
+    "courseFromShortcut": "Course should be the same as in shortcut",
+    "emailFromIndex": "Email should contain student's index and @pja.edu.pl domain"
   },
   "common": {
     "yes": "yes",
