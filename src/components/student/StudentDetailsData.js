@@ -37,11 +37,11 @@ function StudentDetailsData(props) {
     }
     return (
         <React.Fragment>
-            <p>{t('stud.fields.firstName')}: {stud.firstName} </p>
-            <p>{t('stud.fields.lastName')}: {stud.lastName} </p>
-            <p>{t('stud.fields.index')}: {stud.index} </p>
-            <p>{t('stud.fields.birthDate')}: {getFormattedDate(stud.birthDate)} </p>
-            <p>{t('stud.fields.email')}: {stud.email} </p>
+            <p><b>{t('stud.fields.firstName')}:</b> {stud.firstName} </p>
+            <p><b>{t('stud.fields.lastName')}:</b> {stud.lastName} </p>
+            <p><b>{t('stud.fields.index')}:</b> {stud.index} </p>
+            <p><b>{t('stud.fields.birthDate')}:</b> {getFormattedDate(stud.birthDate)} </p>
+            <p><b>{t('stud.fields.email')}:</b> {stud.email} </p>
             {tableHeader}
             {studiesTable}
         </React.Fragment>

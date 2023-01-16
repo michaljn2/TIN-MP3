@@ -1,13 +1,15 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 function StudyListTableRow (props) {
     const study = props.studyData;
+    const {t} = useTranslation();
     return (
         <tr>
             <td>{study.student.firstName + " " + study.student.lastName + " " + study.student.index}</td>
             <td>{study.group.shortcut}</td>
-            <td>{study.grade ? study.grade : "brak"}</td>
+            <td>{study.grade ? study.grade : t('common.lack')}</td>
             <td>
                 <ul className="list-actions">
                     <li><Link to={`/studies/details/${study._id}`} className="list-actions-button-details">

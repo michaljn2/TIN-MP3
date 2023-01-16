@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {getStudiesApiCall} from "../../apiCalls/studyApiCalls";
 import StudyListTable from "./StudyListTable";
+import {withTranslation} from "react-i18next";
 
 class StudyList extends React.Component {
     constructor(props) {
@@ -39,21 +40,22 @@ class StudyList extends React.Component {
     render() {
         const {error, isLoaded, studies} = this.state;
         let content;
+        const {t} = this.props;
 
         if (error){
-            content = <p>Błąd: {error.message}</p>
+            content = <p>{t('common.error')}: {error.message}</p>
         } else if (!isLoaded){
-            content = <p>Ladowanie danych przynależności</p>
+            content = <p>{t('study.list.loading')}</p>
         } else {
             content = <StudyListTable studiesList={studies} />
         }
 
         return(
             <main>
-                <h2>Lista przynależności</h2>
+                <h2>{t('study.list.title')}</h2>
                 {content}
                 <p className="form-buttons">
-                    <Link to="/studies/add" className="button-add">Dodaj nową przynależność</Link>
+                    <Link to="/studies/add" className="button-add">{t('study.form.add.btnLabel')}</Link>
                 </p>
             </main>
         )
@@ -61,4 +63,4 @@ class StudyList extends React.Component {
 
 }
 
-export default StudyList
+export default withTranslation() (StudyList)

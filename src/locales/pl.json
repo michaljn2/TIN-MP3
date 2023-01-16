@@ -27,8 +27,7 @@
       "title": "Akcje",
       "details": "Szczegóły",
       "edit": "Edytuj",
-      "delete": "Usuń",
-      "actions": "list.actions.actions"
+      "delete": "Usuń"
     }
   },
   "form": {
@@ -125,12 +124,13 @@
       "title": "Przynależności",
       "addNew": "Dodaj nową przynależność",
       "noData": "Brak przynależności w bazie danych",
-      "pageTitle": "Lista przynależności"
+      "pageTitle": "Lista przynależności",
+      "loading": "Ladowanie danych przynależności"
     },
     "form": {
-      "selectStudent": "Wybierz studenta",
-      "selectGroup": "Wybierz grupę",
-      "selectGrade": "Wybierz ocenę",
+      "selectStudent": "--- Wybierz studenta ---",
+      "selectGroup": "--- Wybierz grupę ---",
+      "selectGrade": "--- Wybierz ocenę ---",
       "add": {
         "pageTitle": "Nowa przynależność",
         "btnLabel": "Dodaj nową przynależność"

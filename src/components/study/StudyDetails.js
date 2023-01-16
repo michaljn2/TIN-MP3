@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {getStudyByIdApiCall} from "../../apiCalls/studyApiCalls";
 import StudyDetailsData from "./StudyDetailsData";
+import {withTranslation} from "react-i18next";
 
 class StudyDetails extends React.Component {
     constructor(props) {
@@ -51,11 +52,12 @@ class StudyDetails extends React.Component {
     render() {
         const {study, error, isLoaded, message} = this.state;
         let content;
+        const {t} = this.props;
 
         if(error){
-            content = <p>Błąd: {error.message}</p>
+            content = <p>{t('common.error')}: {error.message}</p>
         } else if (!isLoaded){
-            content = <p>Pobieranie danych przynależności...</p>
+            content = <p>{t('study.form.details.loading')}...</p>
         } else if(message) {
             content = <p>{message}</p>
         } else {
@@ -64,14 +66,14 @@ class StudyDetails extends React.Component {
 
         return(
             <main>
-                <h2>Szczegóły przynależności</h2>
+                <h2>{t('study.form.details.pageTitle')}</h2>
                 {content}
                 <div className="form-buttons">
-                    <Link to="/studies" className="form-buttons-back">Powrót</Link>
+                    <Link to="/studies" className="form-buttons-back">{t('form.actions.return')}</Link>
                 </div>
             </main>
         )
     }
 
 }
-export default StudyDetails
+export default withTranslation() (StudyDetails)

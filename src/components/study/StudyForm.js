@@ -8,6 +8,7 @@ import {Redirect} from "react-router-dom";
 import FormInput from "../form/FormInput";
 import FormButtons from "../form/FormButtons";
 import FormSelect from "../form/FormSelect";
+import {withTranslation} from "react-i18next";
 
 class StudyForm extends React.Component {
     constructor(props) {
@@ -67,9 +68,10 @@ class StudyForm extends React.Component {
     }
 
     fetchGradeOptions = () => {
+        const {t} = this.props;
         this.setState({
             gradeOptions: [
-                {label: "--- Wybierz ocenę ---", value: null},
+                {label: t('study.form.selectGrade'), value: ''},
                 {label: "2.0", value: '2.0'},
                 {label: "3.0", value: '3.0'},
                 {label: "3.5", value: '3.5'},
@@ -81,6 +83,7 @@ class StudyForm extends React.Component {
     }
 
     fetchStudentOptions = () => {
+        const {t} = this.props;
         getStudentsApiCall()
             .then(res => res.json())
             .then(data => {
@@ -89,8 +92,8 @@ class StudyForm extends React.Component {
                     value: stud._id
                 }))
                 newList.unshift({
-                    label: "--- Wybierz studenta ---",
-                    value: null
+                    label: t('study.form.selectStudent'),
+                    value: ''
                 });
                 return newList;
             })
@@ -102,6 +105,7 @@ class StudyForm extends React.Component {
     }
 
     fetchGroupOptions = () => {
+        const {t} = this.props;
         getGroupsApiCall()
             .then(res => res.json())
             .then(data => {
@@ -110,8 +114,8 @@ class StudyForm extends React.Component {
                     value: group._id
                 }));
                 newList.unshift({
-                    label: "--- Wybierz grupę ---",
-                    value: null
+                    label: t('study.form.selectGroup'),
+                    value: ''
                 });
                 return newList;
             })
@@ -159,15 +163,16 @@ class StudyForm extends React.Component {
 
     validateField = (fieldName, fieldValue) => {
         let errorMessage = '';
+        const {t} = this.props;
         if(fieldName === 'student_id'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = 'Pole jest wymagane'
+                errorMessage = t('validation.required')
             }
         }
 
         if(fieldName === 'group_id'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = 'Pole jest wymagane'
+                errorMessage = t('validation.required')
             }
         }
         return errorMessage;
@@ -258,6 +263,7 @@ class StudyForm extends React.Component {
 
     render() {
         const {redirect} = this.state;
+        const{t} = this.props;
         if(redirect){
             const currentFormMode = this.state.formMode;
             const notice = currentFormMode === formMode.NEW ? 'Pomyślnie dodano nową przynależność' : 'Pomyślnie zaktualizowano przynależność';
@@ -270,9 +276,9 @@ class StudyForm extends React.Component {
                 }} />
             )
         }
-        const errorsSummary = this.hasErrors() ? 'Formularz zawiera błędy' : '';
-        const fetchError = this.state.error ? `Błąd: ${this.state.error.message}` : '';
-        const pageTitle = this.state.formMode === formMode.NEW ? 'Dodawanie nowej przynależności' : 'Edycja przynależności';
+        const errorsSummary = this.hasErrors() ? t('validation.invalidForm') : '';
+        const fetchError = this.state.error ? t('common.error')`: ${this.state.error.message}` : '';
+        const pageTitle = this.state.formMode === formMode.NEW ? t('study.form.add.pageTitle') : t('study.form.edit.pageTitle');
 
         const globalErrorMessage = errorsSummary || fetchError || this.state.message;
         return (
@@ -280,7 +286,7 @@ class StudyForm extends React.Component {
                 <h2>{pageTitle}</h2>
                 <form className="form" onSubmit={this.handleSubmit}>
                     <FormSelect
-                        label="Student"
+                        label={t('study.fields.student')}
                         required
                         error={this.state.errors.student_id}
                         name="student_id"
@@ -289,7 +295,7 @@ class StudyForm extends React.Component {
                         options={this.state.studentOptions}
                     />
                     <FormSelect
-                        label="Grupa"
+                        label={t('study.fields.group')}
                         required
                         error={this.state.errors.group_id}
                         name="group_id"
@@ -299,7 +305,7 @@ class StudyForm extends React.Component {
                     />
                     <FormInput
                         type="checkbox"
-                        label="ITN"
+                        label={t('study.fields.itn')}
                         error={this.state.errors.itn}
                         name="itn"
                         onChange={this.handleChange}
@@ -307,7 +313,7 @@ class StudyForm extends React.Component {
                         checked={this.state.study.itn === true}
                     />
                     <FormSelect
-                        label="Ocena"
+                        label={t('study.fields.grade')}
                         error={this.state.errors.grade}
                         name="grade"
                         onChange={this.handleChange}
@@ -324,4 +330,4 @@ class StudyForm extends React.Component {
         )
     }
 }
-export default StudyForm
+export default withTranslation() (StudyForm)

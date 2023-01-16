@@ -1,16 +1,18 @@
 import React from "react";
 import StudyListTableRow from "./StudyListTableRow";
+import {useTranslation} from "react-i18next";
 
 function StudyListTable (props){
     const studies = props.studiesList;
+    const {t} = useTranslation();
     return(
         <table className="table-list">
             <thead>
                 <tr>
-                    <th>Student</th>
-                    <th>Grupa</th>
-                    <th>Ocena</th>
-                    <th>Akcje</th>
+                    <th>{t('study.fields.student')}</th>
+                    <th>{t('study.fields.group')}</th>
+                    <th>{t('study.fields.grade')}</th>
+                    <th>{t('list.actions.title')}</th>
                 </tr>
             </thead>
             <tbody>

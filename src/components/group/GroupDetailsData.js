@@ -35,10 +35,10 @@ function GroupDetailsData(props) {
     }
     return (
         <React.Fragment>
-            <p>{t('group.fields.shortcut')}: {group.shortcut} </p>
-            <p>{t('group.fields.course')}: {group.course} </p>
-            <p>{t('group.fields.faculty')}: {group.faculty ? group.faculty : t('common.lack')} </p>
-            <p>{t('group.fields.capacity')}: {group.capacity} </p>
+            <p><b>{t('group.fields.shortcut')}:</b> {group.shortcut} </p>
+            <p><b>{t('group.fields.course')}:</b> {group.course} </p>
+            <p><b>{t('group.fields.faculty')}: </b>{group.faculty ? group.faculty : t('common.lack')} </p>
+            <p><b>{t('group.fields.capacity')}:</b> {group.capacity} </p>
             {tableHeader}
             {studiesTable}
         </React.Fragment>

@@ -26,8 +26,7 @@
       "title": "Actions",
       "details": "Details",
       "edit": "Edit",
-      "delete": "Delete",
-      "actions": "list.actions.actions"
+      "delete": "Delete"
     }
   },
   "form": {
@@ -124,12 +123,13 @@
       "title": "Studies",
       "addNew": "Add new study",
       "noData": "No studies in database",
-      "pageTitle": "List of studies"
+      "pageTitle": "List of studies",
+      "loading": "Loading studies data"
     },
     "form": {
-      "selectStudent": "Select student",
-      "selectGroup": "Select group",
-      "selectGrade": "Select grade",
+      "selectStudent": "--- Select student ---",
+      "selectGroup": "--- Select group ---",
+      "selectGrade": "--- Select grade ---",
       "add": {
         "pageTitle": "New study",
         "btnLabel": "Add new study"
@@ -140,7 +140,7 @@
       },
       "details": {
         "pageTitle": "Study details",
-        "loading": "Loading studies details"
+        "loading": "Loading study details"
       }
     }
   },

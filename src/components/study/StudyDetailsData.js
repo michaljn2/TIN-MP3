@@ -1,13 +1,15 @@
 import React from "react";
+import {useTranslation} from "react-i18next";
 
 function StudyDetailsData(props) {
     const study = props.studyData;
+    const {t} = useTranslation();
     return (
         <React.Fragment>
-            <p>Student: {study.student.firstName + " " + study.student.lastName + " " + study.student.index} </p>
-            <p>Grupa: {study.group.shortcut} </p>
-            <p>ITN: {(study.itn === true) ? "tak" : "nie"} </p>
-            <p>Ocena: {study.grade ? study.grade : "brak"} </p>
+            <p><b>{t('study.fields.student')}:</b> {study.student.firstName + " " + study.student.lastName + " " + study.student.index} </p>
+            <p><b>{t('study.fields.group')}:</b> {study.group.shortcut} </p>
+            <p><b>{t('study.fields.itn')}:</b> {(study.itn === true) ? t('common.yes') : t('common.no')} </p>
+            <p><b>{t('study.fields.grade')}:</b> {study.grade ? study.grade : t('common.lack')} </p>
         </React.Fragment>
     )
 }
