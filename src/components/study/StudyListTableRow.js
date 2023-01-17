@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import {deleteStudyApiCall} from "../../apiCalls/studyApiCalls";
 
 function StudyListTableRow (props) {
     const study = props.studyData;
@@ -21,6 +22,9 @@ function StudyListTableRow (props) {
                     <li><Link to={`/studies/delete/${study._id}`} className="list-actions-button-delete">
                         <img src={process.env.PUBLIC_URL + '/img/DELETE.png'} alt="Delete" className="action-icon"/>
                     </Link></li>
+                    <li><button className="list-actions-button-delete" onClick={() => {deleteStudyApiCall(study._id).then((res) => window.location.reload(false))}}>
+                        <img src={process.env.PUBLIC_URL + '/img/DELETE.png'} alt="Delete" className="action-icon"/>
+                    </button></li>
                 </ul>
             </td>
         </tr>

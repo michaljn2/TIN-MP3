@@ -31,3 +31,14 @@ export function updateStudyApiCall(studyId, study) {
     };
     return fetch(url, options);
 }
+
+export function deleteStudyApiCall(studyId) {
+    const url = `${studiesBaseUrl}/${studyId}`;
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    return fetch(url, options);
+}

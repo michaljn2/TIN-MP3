@@ -36,3 +36,14 @@ export function updateGroupApiCall(groupId, group) {
     const promise = fetch(url, options);
     return promise;
 }
+
+export function deleteGroupApiCall(groupId) {
+    const url = `${groupsBaseUrl}/${groupId}`;
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    return fetch(url, options);
+}
