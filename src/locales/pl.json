@@ -35,7 +35,9 @@
       "return": "Powrót",
       "edit": "Edytuj",
       "cancel": "Anuluj",
-      "add": "Dodaj"
+      "add": "Dodaj",
+      "login": "Zaloguj się",
+      "logout": "Wyloguj się"
     }
   },
   "stud": {
@@ -178,5 +180,9 @@
     "no": "nie",
     "error": "Błąd",
     "lack": "brak"
+  },
+  "auth": {
+    "pageTitle": "Logowanie",
+    "invalid": "Nieprawidłowe hasło lub email!"
   }
 }

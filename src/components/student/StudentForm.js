@@ -148,11 +148,9 @@ class StudentForm extends React.Component {
             }
         }
 
-        if (fieldName === 'password'){
+        if (fieldName === 'password' && this.state.formMode === 'NEW'){
             if(!checkRequired(fieldValue)){
                 errorMessage = formValidationKeys.required
-            } else if(!checkTextLengthRange(fieldValue,5,30)){
-                errorMessage = formValidationKeys.password
             }
         }
         return errorMessage;
@@ -323,7 +321,6 @@ class StudentForm extends React.Component {
                         name="password"
                         placeholder=""
                         onChange={this.handleChange}
-                        value={this.state.stud.password}
                     />
                     <FormButtons
                         formMode={this.state.formMode}

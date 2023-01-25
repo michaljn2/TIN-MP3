@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {getStudentsApiCall} from "../../apiCalls/studentApiCalls";
 import StudentListTable from "./StudentListTable";
 import {withTranslation} from "react-i18next";
+import {isAuthenticated} from "../../helpers/authHelper";
 
 class StudentList extends React.Component {
     constructor(props) {
@@ -53,9 +54,11 @@ class StudentList extends React.Component {
             <main>
                 <h2>{t('stud.list.pageTitle')}</h2>
                 {content}
+                {isAuthenticated() &&
                 <p className="form-buttons">
                     <Link to="/students/add" className="button-add">{t('stud.list.addNew')}</Link>
                 </p>
+                }
             </main>
         )
 

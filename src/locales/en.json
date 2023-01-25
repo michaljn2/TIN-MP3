@@ -34,7 +34,9 @@
       "return": "Return",
       "edit": "Edit",
       "cancel": "Cancel",
-      "add": "Add"
+      "add": "Add",
+      "login": "Login",
+      "logout": "Logout"
     }
   },
   "stud": {
@@ -177,5 +179,9 @@
     "no": "no",
     "error": "Error",
     "lack": "lack"
+  },
+  "auth":{
+    "pageTitle": "Logging",
+    "invalid": "Incorrect password or email!"
   }
 }

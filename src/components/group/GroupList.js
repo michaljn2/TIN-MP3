@@ -4,6 +4,7 @@ import {getGroupsApiCall} from "../../apiCalls/groupApiCalls";
 import GroupListTable from "./GroupListTable";
 import {withTranslation} from "react-i18next";
 import StudentListTable from "../student/StudentListTable";
+import {isAuthenticated} from "../../helpers/authHelper";
 
 class GroupList extends React.Component {
     constructor(props) {
@@ -56,9 +57,11 @@ class GroupList extends React.Component {
             <main>
                 <h2>{t('group.list.pageTitle')}</h2>
                 {content}
+                {isAuthenticated() &&
                 <p className="form-buttons">
                     <Link to="/groups/add" className="button-add">{t('group.form.add.btnLabel')}</Link>
                 </p>
+                }
             </main>
         )
     }
