@@ -49,7 +49,7 @@ export function checkIndex(value) {
         return false;
     }
     value = value.toString().trim();
-    const re = /^s[1-9][0-9]{0,4}/;
+    const re = /^s[1-9][0-9]{0,4}$/;
     return re.test(value);
 }
 

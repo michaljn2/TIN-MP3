@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {getGroupsApiCall} from "../../apiCalls/groupApiCalls";
 import GroupListTable from "./GroupListTable";
 import {withTranslation} from "react-i18next";
+import StudentListTable from "../student/StudentListTable";
 
 class GroupList extends React.Component {
     constructor(props) {
@@ -50,6 +51,7 @@ class GroupList extends React.Component {
         } else {
             content = <GroupListTable groupList={groups}/>
         }
+
         return (
             <main>
                 <h2>{t('group.list.pageTitle')}</h2>

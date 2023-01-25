@@ -19,9 +19,9 @@ function StudyListTableRow (props) {
                     <li><Link to={`/studies/edit/${study._id}`} className="list-actions-button-edit">
                         <img src={process.env.PUBLIC_URL + '/img/EDIT.png'} alt="Edit" className="action-icon"/>
                     </Link></li>
-                    <li><Link to={`/studies/delete/${study._id}`} className="list-actions-button-delete">
-                        <img src={process.env.PUBLIC_URL + '/img/DELETE.png'} alt="Delete" className="action-icon"/>
-                    </Link></li>
+                    {/*<li><Link to={`/studies/delete/${study._id}`} className="list-actions-button-delete">*/}
+                    {/*    <img src={process.env.PUBLIC_URL + '/img/DELETE.png'} alt="Delete" className="action-icon"/>*/}
+                    {/*</Link></li>*/}
                     <li><button className="list-actions-button-delete" onClick={() => {deleteStudyApiCall(study._id).then((res) => window.location.reload(false))}}>
                         <img src={process.env.PUBLIC_URL + '/img/DELETE.png'} alt="Delete" className="action-icon"/>
                     </button></li>

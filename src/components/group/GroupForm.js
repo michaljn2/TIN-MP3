@@ -8,6 +8,7 @@ import FormButtons from "../form/FormButtons";
 import {getGroupByIdApiCall} from "../../apiCalls/groupApiCalls";
 import {addGroupApiCall, updateGroupApiCall} from "../../apiCalls/groupApiCalls";
 import {withTranslation} from "react-i18next";
+import {formValidationKeys} from "../../helpers/formHelper";
 
 class GroupForm extends React.Component {
     constructor(props) {
@@ -90,27 +91,27 @@ class GroupForm extends React.Component {
         let errorMessage = '';
         if(fieldName === 'shortcut'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = t('validation.required');
+                errorMessage = formValidationKeys.required;
             } else if (!checkShortcut(fieldValue)) {
-                errorMessage = t('validation.group.shortcut')
+                errorMessage = formValidationKeys.shortcut;
             }
         }
 
         if(fieldName === 'course'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = t('validation.required')
+                errorMessage = formValidationKeys.required;
             } else if (!checkCourse(fieldValue)) {
-                errorMessage = t('validation.group.course')
+                errorMessage = formValidationKeys.course;
             }
         }
 
         if(fieldName === 'capacity'){
             if (!checkRequired(fieldValue)) {
-                errorMessage = t('validation.required')
+                errorMessage = formValidationKeys.required;
             } else if (!checkInteger(fieldValue)) {
-                errorMessage = t('validation.group.capacity.integer')
+                errorMessage = formValidationKeys.capacityInteger;
             } else if (!checkNumberRange(fieldValue, 1,150)) {
-                errorMessage = t('validation.group.capacity.range')
+                errorMessage = formValidationKeys.capacityRange;
             }
         }
 
