@@ -2,7 +2,6 @@ import React from "react";
 import formMode from '../../helpers/formHelper'
 import {checkRequired, checkInteger, checkCourse, checkShortcut,
     checkNumberRange} from '../../helpers/validationCommon';
-import {Redirect} from "react-router-dom";
 import FormInput from "../form/FormInput";
 import FormButtons from "../form/FormButtons";
 import {getGroupByIdApiCall} from "../../apiCalls/groupApiCalls";

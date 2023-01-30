@@ -1,98 +1,84 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {getStudentByIdApiCall, addStudentApiCall, updateStudentApiCall} from "../../apiCalls/studentApiCalls";
 import formMode from '../../helpers/formHelper'
 import {checkRequired, checkTextLengthRange, checkIndex,
     checkEmail, checkDate, checkDateBefore} from '../../helpers/validationCommon';
-import {Redirect} from "react-router-dom";
 import FormInput from "../form/FormInput";
 import FormButtons from "../form/FormButtons";
 import {getFormattedDate} from "../../helpers/dateHelper";
-import {withTranslation} from "react-i18next";
+import {useTranslation, withTranslation} from "react-i18next";
 import {formValidationKeys} from "../../helpers/formHelper";
+import {Link, useParams, useNavigate} from "react-router-dom";
 
-class StudentForm extends React.Component {
-    constructor(props) {
-        super(props);
-        const paramsStudId = props.match.params.studId;
-        const currentFormMode = paramsStudId ? formMode.EDIT : formMode.NEW;
+function StudentForm(){
+    const {t} = useTranslation();
+    const [stud, setStud] = useState({
+        firstName: '',
+        lastName: '',
+        index: '',
+        birthDate: '',
+        email: '',
+        password: ''
+    });
+    const [error, setError] = useState(null);
+    const [errors, setErrors] = useState({
+        firstName: '',
+        lastName: '',
+        index: '',
+        birthDate: '',
+        email: '',
+        password: ''
+    })
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [message, setMessage] = useState(null);
+    const [redirect, setRedirect] = useState(false);
 
-        this.state = {
-            studId: paramsStudId,
-            stud: {
-                firstName: '',
-                lastName: '',
-                index: '',
-                birthDate: '',
-                email: '',
-                password: ''
-            },
-            errors:{
-                firstName: '',
-                lastName: '',
-                index: '',
-                birthDate: '',
-                email: '',
-                password: ''
-            },
-            formMode: currentFormMode,
-            redirect: false,
-            error: null
-        }
-    }
+    const {studId} = useParams();
+    const currentFormMode = studId ? formMode.EDIT : formMode.NEW;
+    const navigate = useNavigate();
 
-    fetchStudentDetails = () => {
-        getStudentByIdApiCall(this.state.studId)
+
+    function fetchStudentDetails(){
+        getStudentByIdApiCall(studId)
             .then(res => res.json())
             .then(
                 data => {
                     if(data.message){
-                        this.setState({
-                            message: data.message
-                        })
+                        setMessage(data.message)
                     } else {
-                        this.setState({
-                            stud: data,
-                            message: null
-                        })
+                        setStud(data);
+                        setMessage(null);
                     }
-                    this.setState({
-                        isLoaded: true
-                    })
+                    setIsLoaded(true);
                 },
                 error => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    })
+                    setIsLoaded(true);
+                    setError(error);
                 }
             )
     }
 
-    componentDidMount = () => {
-        const currentFormMode = this.state.formMode;
-        if(currentFormMode === formMode.EDIT){
-            this.fetchStudentDetails();
-        }
-    }
+   useEffect(() => {
+       if (currentFormMode === formMode.EDIT){
+           fetchStudentDetails()
+       }
+   }, []);
 
-    handleChange = (event) => {
+    function handleChange(event){
         const {name, value} = event.target;
-        const stud = {...this.state.stud}
-        stud[name] = value;
-
         const errorMessage = this.validateField(name, value);
-        const errors = {...this.state.errors};
-        errors[name] = errorMessage;
-
-        this.setState({
-            stud: stud,
-            errors: errors
+        setErrors({
+            ...errors,
+            [name]: errorMessage
+        });
+        setStud({
+            ...stud,
+            [name]: value
         })
     }
 
-    validateField = (fieldName, fieldValue) => {
+    function validateField(fieldName, fieldValue){
         let errorMessage = '';
-        const {t} = this.props;
         if(fieldName === 'firstName'){
             if (!checkRequired(fieldValue)) {
                 errorMessage = formValidationKeys.required;
@@ -148,7 +134,7 @@ class StudentForm extends React.Component {
             }
         }
 
-        if (fieldName === 'password' && this.state.formMode === 'NEW'){
+        if (fieldName === 'password' && currentFormMode === 'NEW'){
             if(!checkRequired(fieldValue)){
                 errorMessage = formValidationKeys.required
             }
@@ -156,21 +142,15 @@ class StudentForm extends React.Component {
         return errorMessage;
     }
 
-    handleSubmit = (event) => {
+    function handleSubmit(event){
         event.preventDefault();
-        const isValid = this.validateForm();
+        const isValid = validateForm();
         if(isValid) {
-            const
-                stud = this.state.stud,
-                currentFormMode = this.state.formMode
-            let
-                promise,
-                response;
+            let promise, response;
             if(currentFormMode === formMode.NEW) {
                 promise = addStudentApiCall(stud);
             } else if (currentFormMode === formMode.EDIT) {
                 console.log(stud);
-                const studId = this.state.studId;
                 promise = updateStudentApiCall(studId, stud);
             }
 
@@ -187,27 +167,21 @@ class StudentForm extends React.Component {
                         data => {
                             if(!response.ok && response.status === 500){
                                 console.log(data);
+                                const serverFieldsErrors = {...errors};
                                 for(const i in data) {
                                     const errorItem = data[i];
                                     const errorMessage = errorItem.message;
                                     const fieldName = errorItem.path;
-                                    const errors = {...this.state.errors};
-                                    errors[fieldName] = errorMessage;
-                                    this.setState({
-                                        errors: errors,
-                                        error: null
-                                    });
+                                    serverFieldsErrors[fieldName] = errorMessage;
                                 }
+                                setErrors(serverFieldsErrors);
+                                setError(null);
                             } else {
-                                this.setState({
-                                    redirect: true
-                                });
+                               setRedirect(true);
                             }
                         },
                         error => {
-                            this.setState({
-                                error
-                            });
+                            setError(error);
                             console.log(error);
                         }
                     )
@@ -215,121 +189,111 @@ class StudentForm extends React.Component {
         }
     }
 
-    validateForm = () => {
-        const stud = this.state.stud;
-        const errors = this.state.errors;
-        for(const fieldName in stud){
-            const fieldValue = stud[fieldName];
-            const errorMessage = this.validateField(fieldName, fieldValue);
-            errors[fieldName] = errorMessage;
-        }
-        this.setState({
-            errors: errors
-        });
-        return !this.hasErrors();
+    function validateForm(){
+        let isValid = true;
+        let serverFieldErrors = {...errors};
+       Object.entries(stud).forEach(([key, value]) => {
+           const errorMessage = validateField(key, value);
+           serverFieldErrors[key] = errorMessage;
+           if (errorMessage.length > 0){
+               isValid = false;
+           }
+       })
+        setErrors(serverFieldErrors);
+       return isValid;
     }
 
-    hasErrors = () => {
-        const errors = this.state.errors;
-        for(const errorField in this.state.errors) {
-            if(errors[errorField].length > 0){
-                return true;
+    function hasErrors(){
+        let hasErrors = false;
+        Object.values(errors).forEach((value) => {
+            if (value.length > 0){
+                hasErrors = true;
             }
-        }
-        return false;
+        })
+        return hasErrors;
     }
 
-    render() {
-        const {redirect} = this.state;
-        const {t} = this.props;
-        if(redirect){
-            const currentFormMode = this.state.formMode;
-            const notice = currentFormMode === formMode.NEW ? 'Pomyślnie dodano nowego studenta' : 'Pomyślnie zaktualizowano dane studenta';
-            return(
-                <Redirect to={{
-                    pathname: "/students/",
-                    state: {
-                        notice: notice
-                    }
-                }} />
-            )
+    useEffect(() => {
+        if (redirect){
+            navigate('students');
         }
-        const errorsSummary = this.hasErrors() ? t('validation.invalidForm') : '';
-        const fetchError = this.state.error ? t('common.error')+`: ${this.state.error.message}` : '';
-        const pageTitle = this.state.formMode === formMode.NEW ? t('stud.form.add.pageTitle') : t('stud.form.edit.pageTitle');
+    }, [redirect])
 
-        const globalErrorMessage = errorsSummary || fetchError || this.state.message;
-        return (
-            <main>
-                <h2>{pageTitle}</h2>
-                <form className="form" onSubmit={this.handleSubmit}>
-                    <FormInput
-                        type="text"
-                        label={t('stud.fields.firstName')}
-                        required
-                        error={this.state.errors.firstName}
-                        name="firstName"
-                        placeholder={t('stud.form.placeholder.firstName')}
-                        onChange={this.handleChange}
-                        value={this.state.stud.firstName}
-                    />
-                    <FormInput
-                        type="text"
-                        label={t('stud.fields.lastName')}
-                        required
-                        error={this.state.errors.lastName}
-                        name="lastName"
-                        placeholder={t('stud.form.placeholder.lastName')}
-                        onChange={this.handleChange}
-                        value={this.state.stud.lastName}
-                    />
-                    <FormInput
-                        type="text"
-                        label={t('stud.fields.index')}
-                        required
-                        error={this.state.errors.index}
-                        name="index"
-                        placeholder={t('stud.form.placeholder.index')}
-                        onChange={this.handleChange}
-                        value={this.state.stud.index}
-                    />
-                    <FormInput
-                        type="date"
-                        label={t('stud.fields.birthDate')}
-                        required
-                        error={this.state.errors.birthDate}
-                        name="birthDate"
-                        placeholder=""
-                        onChange={this.handleChange}
-                        value={getFormattedDate(this.state.stud.birthDate)}
-                    />
-                    <FormInput
-                        type="text"
-                        label={t('stud.fields.email')}
-                        required
-                        error={this.state.errors.email}
-                        name="email"
-                        placeholder={t('stud.form.placeholder.email')}
-                        onChange={this.handleChange}
-                        value={this.state.stud.email}
-                    />
-                    <FormInput
-                        type="password"
-                        label={t('stud.fields.password')}
-                        required
-                        error={this.state.errors.password}
-                        name="password"
-                        placeholder=""
-                        onChange={this.handleChange}
-                    />
-                    <FormButtons
-                        formMode={this.state.formMode}
-                        error={globalErrorMessage}
-                        cancelPath="/students"
-                    />
-                </form>
-            </main>
-        )
-    }
+    const errorsSummary = hasErrors() ? t('validation.invalidForm') : '';
+    const fetchError = error ? t('common.error')+`: ${error.message}` : '';
+    const pageTitle = currentFormMode === formMode.NEW ? t('stud.form.add.pageTitle') : t('stud.form.edit.pageTitle');
+
+    const globalErrorMessage = errorsSummary || fetchError || message;
+    return (
+        <main>
+            <h2>{pageTitle}</h2>
+            <form className="form" onSubmit={handleSubmit}>
+                <FormInput
+                    type="text"
+                    label={t('stud.fields.firstName')}
+                    required
+                    error={errors.firstName}
+                    name="firstName"
+                    placeholder={t('stud.form.placeholder.firstName')}
+                    onChange={handleChange}
+                    value={stud.firstName}
+                />
+                <FormInput
+                    type="text"
+                    label={t('stud.fields.lastName')}
+                    required
+                    error={errors.lastName}
+                    name="lastName"
+                    placeholder={t('stud.form.placeholder.lastName')}
+                    onChange={handleChange}
+                    value={stud.lastName}
+                />
+                <FormInput
+                    type="text"
+                    label={t('stud.fields.index')}
+                    required
+                    error={errors.index}
+                    name="index"
+                    placeholder={t('stud.form.placeholder.index')}
+                    onChange={handleChange}
+                    value={stud.index}
+                />
+                <FormInput
+                    type="date"
+                    label={t('stud.fields.birthDate')}
+                    required
+                    error={errors.birthDate}
+                    name="birthDate"
+                    placeholder=""
+                    onChange={handleChange}
+                    value={getFormattedDate(stud.birthDate)}
+                />
+                <FormInput
+                    type="text"
+                    label={t('stud.fields.email')}
+                    required
+                    error={errors.email}
+                    name="email"
+                    placeholder={t('stud.form.placeholder.email')}
+                    onChange={handleChange}
+                    value={stud.email}
+                />
+                <FormInput
+                    type="password"
+                    label={t('stud.fields.password')}
+                    required
+                    error={errors.password}
+                    name="password"
+                    placeholder=""
+                    onChange={handleChange}
+                />
+                <FormButtons
+                    formMode={currentFormMode}
+                    error={globalErrorMessage}
+                    cancelPath="/students"
+                />
+            </form>
+        </main>
+    )
 }
-export default withTranslation() (StudentForm)
+export default StudentForm

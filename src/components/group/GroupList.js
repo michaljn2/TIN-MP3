@@ -1,70 +1,55 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {getGroupsApiCall} from "../../apiCalls/groupApiCalls";
 import GroupListTable from "./GroupListTable";
-import {withTranslation} from "react-i18next";
-import StudentListTable from "../student/StudentListTable";
+import {useTranslation} from "react-i18next";
 import {isAuthenticated} from "../../helpers/authHelper";
 
-class GroupList extends React.Component {
-    constructor(props) {
-        super(props);
-        let notice = props.location.state && props.location.state.notice ? props.location.state.notice : '';
-        this.state = {
-            error: null,
-            isLoaded: false,
-            groups: [],
-            notice: notice
-        }
-    }
+function GroupList(){
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [groups, setGroups] = useState([]);
 
-    fetchGroupList = () => {
+    function fetchGroupList(){
         getGroupsApiCall()
             .then(res => res.json())
             .then(
                 data => {
-                    this.setState({
-                        isLoaded: true,
-                        groups: data
-                    });
+                    setIsLoaded(true);
+                    setGroups(data);
                 },
                 error => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
+                    setIsLoaded(true);
+                    setError(error);
                 }
             )
     }
 
-    componentDidMount() {
-        this.fetchGroupList();
+    useEffect(() => {
+        fetchGroupList()
+    }, []);
+
+    const {t} = useTranslation();
+    let content;
+    if (error) {
+        content = <p>{t('common.error')}: {error.message}</p>
+    } else if (!isLoaded) {
+        content = <p>{t('group.list.loading')}...</p>
+    } else {
+        content = <GroupListTable groupList={groups}/>
     }
 
-    render() {
-        const {t} = this.props;
-        const {error, isLoaded, groups} = this.state;
-        let content;
-        if (error) {
-            content = <p>{t('common.error')}: {error.message}</p>
-        } else if (!isLoaded) {
-            content = <p>{t('group.list.loading')}...</p>
-        } else {
-            content = <GroupListTable groupList={groups}/>
-        }
-
-        return (
-            <main>
-                <h2>{t('group.list.pageTitle')}</h2>
-                {content}
-                {isAuthenticated() &&
-                <p className="form-buttons">
-                    <Link to="/groups/add" className="button-add">{t('group.form.add.btnLabel')}</Link>
-                </p>
-                }
-            </main>
-        )
-    }
+    return (
+        <main>
+            <h2>{t('group.list.pageTitle')}</h2>
+            {content}
+            {isAuthenticated() &&
+            <p className="form-buttons">
+                <Link to="/groups/add" className="button-add">{t('group.form.add.btnLabel')}</Link>
+            </p>
+            }
+        </main>
+    )
 
 }
-export default withTranslation() (GroupList)
+export default GroupList

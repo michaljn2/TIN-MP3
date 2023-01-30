@@ -4,7 +4,6 @@ import {getGroupsApiCall} from "../../apiCalls/groupApiCalls";
 import {getStudyByIdApiCall, addStudyApiCall, updateStudyApiCall} from "../../apiCalls/studyApiCalls";
 import formMode from '../../helpers/formHelper'
 import {checkRequired} from '../../helpers/validationCommon';
-import {Redirect} from "react-router-dom";
 import FormInput from "../form/FormInput";
 import FormButtons from "../form/FormButtons";
 import FormSelect from "../form/FormSelect";
